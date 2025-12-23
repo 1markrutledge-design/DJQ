@@ -1,0 +1,25 @@
+{
+    "name": "club-queue",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev -H 0.0.0.0",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@azure/cosmos": "^4.9.0",
+        "dotenv": "^17.2.3",
+        "lucide-react": "^0.309.0",
+        "next": "^14.1.0",
+        "pg": "^8.16.3",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "swr": "^2.2.0"
+    },
+    "devDependencies": {
+        "eslint": "^8",
+        "eslint-config-next": "14.1.0"
+    }
+}

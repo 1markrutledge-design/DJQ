@@ -1,0 +1,145 @@
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --primary: #6d28d9;
+  /* Deep Purple */
+  --primary-glow: #8b5cf6;
+  --secondary: #ec4899;
+  /* Pink */
+
+  --card-bg: #171717;
+  --card-border: #262626;
+
+  --gold: #fbbf24;
+  --premium-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+
+  --font-sans: system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utilities */
+.container {
+  max-width: 600px;
+  /* Mobile first focus */
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.btn-primary {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(109, 40, 217, 0.5);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-premium {
+  background: var(--premium-gradient);
+  color: black;
+  box-shadow: 0 4px 14px 0 rgba(251, 191, 36, 0.4);
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.text-gold {
+  color: var(--gold);
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: #262626;
+  border: 1px solid #404040;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--primary-glow);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.bg-home {
+  background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+.bg-guest {
+  background: linear-gradient(-45deg, #1A1A2E, #16213E, #0F3460);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+.bg-venue {
+  background: linear-gradient(-45deg, #000000, #1c1c1c, #2d2d2d);
+  background-size: 400% 400%;
+  animation: gradientBG 20s ease infinite;
+}
