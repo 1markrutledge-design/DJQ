@@ -1,256 +1,363 @@
-import { CosmosClient } from '@azure/cosmos';
+'use server';
 
-let client;
-let database;
-let songsContainer;
-let venuesContainer;
-let requestsContainer;
+import Redis from 'ioredis';
 
-// Initialize connection if env var is present
-if (!process.env.COSMOS_CONNECTION_STRING) {
-    console.warn("COSMOS_CONNECTION_STRING not set");
-} else {
-    client = new CosmosClient(process.env.COSMOS_CONNECTION_STRING);
-    database = client.database('ClubQueueDB');
-    songsContainer = database.container('songs');
-    venuesContainer = database.container('venues');
-    requestsContainer = database.container('requests');
+// --- STORAGE CONFIGURATION ---
+const isKvEnabled = !!process.env.REDIS_URL;
+const redis = isKvEnabled ? new Redis(process.env.REDIS_URL) : null;
+
+// Error handling for Redis
+if (redis) {
+    redis.on('error', (err) => console.error('Redis Client Error', err));
 }
 
-// --- Helper for Queries ---
-async function query(container, querySpec) {
-    if (!container) throw new Error("Database not configured");
-    const { resources } = await container.items.query(querySpec).fetchAll();
-    return resources;
+// Initial data for cold starts
+const initialSongs = require('../data/songs.json');
+const initialVenues = require('../data/venues.json');
+const initialUsers = require('../data/users.json');
+
+// --- In-Memory Fallback (for local dev or if KV is missing) ---
+if (!global.mockDb) {
+    global.mockDb = {
+        songs: initialSongs,
+        venues: initialVenues,
+        queues: {},
+        users: initialUsers,
+        stats: {}
+    };
 }
+const mock = global.mockDb;
+
+// --- Helper: KV Key Builders ---
+const KEYS = {
+    SONGS: 'djq:songs',
+    VENUES: 'djq:venues',
+    USERS: 'djq:users',
+    QUEUE: (code) => `djq:queue:${code}`,
+    STATS: (code) => `djq:stats:${code}`
+};
 
 // --- Songs ---
 export async function getSongs() {
-    // Cosmos NoSQL query
-    const q = {
-        query: "SELECT * FROM c ORDER BY c.title ASC"
-    };
-    return await query(songsContainer, q);
+    if (isKvEnabled) {
+        const data = await redis.get(KEYS.SONGS);
+        return data ? JSON.parse(data) : initialSongs;
+    }
+    return mock.songs;
 }
 
 export async function addSong(song) {
-    if (!songsContainer) throw new Error("Database not configured");
-    // Ensure ID
     if (!song.id) song.id = Date.now().toString();
-    await songsContainer.items.create(song);
+    if (isKvEnabled) {
+        const songs = await getSongs();
+        songs.push(song);
+        await redis.set(KEYS.SONGS, JSON.stringify(songs));
+    } else {
+        mock.songs.push(song);
+    }
     return song;
 }
 
 export async function deleteSong(id) {
-    if (!songsContainer) throw new Error("Database not configured");
-    // Partition key is /id
-    await songsContainer.item(id, id).delete();
+    if (isKvEnabled) {
+        const songs = await getSongs();
+        const filtered = songs.filter(s => s.id !== id);
+        await redis.set(KEYS.SONGS, JSON.stringify(filtered));
+    } else {
+        mock.songs = mock.songs.filter(s => s.id !== id);
+    }
     return true;
 }
 
 // --- Venues ---
 export async function getVenues() {
-    try {
-        const q = { query: "SELECT * FROM c" };
-        return await query(venuesContainer, q);
-    } catch (e) {
-        console.error("getVenues Error:", e);
-        return [];
+    if (isKvEnabled) {
+        const data = await redis.get(KEYS.VENUES);
+        return data ? JSON.parse(data) : initialVenues;
     }
+    return mock.venues;
 }
 
 export async function saveVenue(venue) {
-    if (!venuesContainer) throw new Error("Database not configured");
-    // Cosmos 'items.create'
-    await venuesContainer.items.create(venue);
+    if (isKvEnabled) {
+        const venues = await getVenues();
+        venues.push(venue);
+        await redis.set(KEYS.VENUES, JSON.stringify(venues));
+    } else {
+        mock.venues.push(venue);
+    }
     return venue;
 }
 
 export async function updateVenue(venue) {
-    if (!venuesContainer) throw new Error("Database not configured");
-    // Upsert acts as update if ID/PartitionKey matches
-    await venuesContainer.items.upsert(venue);
+    if (isKvEnabled) {
+        const venues = await getVenues();
+        const index = venues.findIndex(v => v.id === venue.id);
+        if (index !== -1) {
+            venues[index] = venue;
+            await redis.set(KEYS.VENUES, JSON.stringify(venues));
+        }
+    } else {
+        const index = mock.venues.findIndex(v => v.id === venue.id);
+        if (index !== -1) mock.venues[index] = venue;
+    }
     return venue;
 }
 
 export async function deleteVenue(venueId, venueCode) {
-    if (!venuesContainer) throw new Error("Database not configured");
-    // Requires ID and Partition Key (Code)
-    // If we only have ID, we'd need to query. But properly we should pass Code.
-    await venuesContainer.item(venueId, venueCode).delete();
+    if (isKvEnabled) {
+        const venues = await getVenues();
+        const filtered = venues.filter(v => v.id !== venueId);
+        await redis.set(KEYS.VENUES, JSON.stringify(filtered));
+        await redis.del(KEYS.QUEUE(venueCode));
+        await redis.del(KEYS.STATS(venueCode));
+    } else {
+        mock.venues = mock.venues.filter(v => v.id !== venueId);
+        delete mock.queues[venueCode];
+    }
     return true;
 }
 
 // --- Queues ---
 export async function getQueue(venueCode) {
-    if (!requestsContainer) throw new Error("Database not configured");
+    let queue = [];
+    if (isKvEnabled) {
+        const data = await redis.get(KEYS.QUEUE(venueCode));
+        queue = data ? JSON.parse(data) : [];
+    } else {
+        queue = mock.queues[venueCode] || [];
+    }
 
-    // 1. Get requests for venue
-    // Note: Joins across containers are not supported in Cosmos NoSQL in a single query typically unless using specific features.
-    // For simplicity/speed in this migration, we will fetch requests and join manually (since song data is small) OR store song data IN the request.
-    // OPTIMIZATION: We will assume we fetch requests and if they have songId, we might need song details.
-    // BUT, let's look at how we store requests. In `addToQueue`, we receive `request.song`. 
-    // If we store the WHOLE song object in the request document, we don't need a join!
-    // This is the NoSQL way.
-
-    const q = {
-        query: "SELECT * FROM c WHERE c.venueCode = @code AND c.status != 'deleted'",
-        parameters: [{ name: "@code", value: venueCode }]
-    };
-
-    const requests = await query(requestsContainer, q);
-
-    // Sort in JS: status=pending first, then Amount desc, then Time asc
-    return requests.sort((a, b) => {
-        // 1. Pending first (Played moves to bottom or stays depending on UI, usually filtered out)
-        // If both pending or both played, continue
+    // Sort: pending first, then by amount (highest first), then by timestamp
+    return queue.sort((a, b) => {
         const statusA = a.status === 'pending' ? 0 : 1;
         const statusB = b.status === 'pending' ? 0 : 1;
         if (statusA !== statusB) return statusA - statusB;
-
-        // 2. Amount Descending (Highest Tip First)
         const amountA = a.amount || 0;
         const amountB = b.amount || 0;
         if (amountA !== amountB) return amountB - amountA;
-
-        // 3. Time Ascending (First Come First Serve for ties)
         return a.timestamp - b.timestamp;
     });
 }
 
 export async function addToQueue(venueCode, request) {
-    // request: { song: {...}, queueType, amount, notes }
-    if (!requestsContainer) throw new Error("Database not configured");
-
-    // Check 1: Duplicate Pending (Query)
-    const duplicateQ = {
-        query: "SELECT * FROM c WHERE c.venueCode = @code AND c.song.id = @songId AND c.status = 'pending'",
-        parameters: [
-            { name: "@code", value: venueCode },
-            { name: "@songId", value: request.song.id }
-        ]
-    };
-    const dups = await query(requestsContainer, duplicateQ);
-    if (dups.length > 0) throw new Error("This song is already in the queue!");
-
-    // Check 2: Cooldown (1 Hour)
-    const oneHourAgo = Date.now() - (60 * 60 * 1000);
-    const cooldownQ = {
-        query: "SELECT * FROM c WHERE c.venueCode = @code AND c.song.id = @songId AND c.status = 'played' AND c.playedAt > @time",
-        parameters: [
-            { name: "@code", value: venueCode },
-            { name: "@songId", value: request.song.id },
-            { name: "@time", value: oneHourAgo }
-        ]
-    };
-    const recent = await query(requestsContainer, cooldownQ);
-    if (recent.length > 0) throw new Error("This song was played recently. Please wait before requesting it again.");
-
-    const newId = Date.now().toString();
+    const queue = await getQueue(venueCode);
     const now = Date.now();
+    const oneHour = 60 * 60 * 1000;
+
+    // Checks
+    if (queue.some(q => q.song.id === request.song.id && q.status === 'pending')) {
+        throw new Error("This song is already in the queue!");
+    }
+    if (queue.find(q => q.song.id === request.song.id && q.status === 'played' && q.playedAt && (now - q.playedAt) < oneHour)) {
+        throw new Error("This song was played recently. Please wait.");
+    }
 
     const newRequest = {
-        id: newId,
+        id: Date.now().toString(),
         venueCode,
-        userId: request.userId || null, // Optional tracking
-        ...request, // Includes full song object, which is good for NoSQL
+        ...request,
         status: 'pending',
-        timestamp: now
+        timestamp: Date.now(),
+        nowPlayingStartTime: null,
+        playDuration: 0,
+        refunded: false,
+        paymentIntentId: request.paymentIntentId || null,
+        captured: false,
     };
 
-    await requestsContainer.items.create(newRequest);
+    queue.push(newRequest);
+
+    if (isKvEnabled) {
+        await redis.set(KEYS.QUEUE(venueCode), JSON.stringify(queue));
+    } else {
+        mock.queues[venueCode] = queue;
+    }
+
+    await updateVenueStats(venueCode, 'created');
     return newRequest;
 }
 
 export async function markAsPlayed(venueCode, requestId) {
-    if (!requestsContainer) throw new Error("Database not configured");
-
-    // In Cosmos, to update, we typically read then replace, or use Patch API.
-    // Patch is more efficient.
-    const item = requestsContainer.item(requestId, venueCode); // partition key assumed to be venueCode
-
-    // Note: If partition key is NOT venueCode, this might fail. We should define venueCode as partition key.
-
-    const { resource: existing } = await item.read();
-    if (existing) {
-        existing.status = 'played';
-        existing.playedAt = Date.now();
-        await item.replace(existing);
+    const queue = await getQueue(venueCode);
+    const index = queue.findIndex(req => req.id === requestId);
+    if (index !== -1) {
+        queue[index].status = 'played';
+        queue[index].playedAt = Date.now();
+        if (isKvEnabled) {
+            await redis.set(KEYS.QUEUE(venueCode), JSON.stringify(queue));
+        }
     }
     return true;
 }
 
-export async function updateRequestAmount(venueCode, requestId, extraAmount) {
-    if (!requestsContainer) throw new Error("Database not configured");
-
-    // In Cosmos, we need to read then replace/upsert
-    const item = requestsContainer.item(requestId, venueCode);
-
-    const { resource: existing } = await item.read();
-    if (existing) {
-        existing.amount = (existing.amount || 0) + parseFloat(extraAmount);
-
-        // Removed: Upgrade to Premium logic. Sorting is now purely dynamic based on amount.
-
-        await item.replace(existing);
-        return existing;
-    }
-    throw new Error("Request not found");
+export async function removeFromQueue(venueCode, requestId) {
+    return await markAsPlayed(venueCode, requestId);
 }
 
-export async function removeFromQueue(venueCode, requestId) {
-    return markAsPlayed(venueCode, requestId);
+export async function updateRequestAmount(venueCode, requestId, extraAmount) {
+    const queue = await getQueue(venueCode);
+    const index = queue.findIndex(req => req.id === requestId);
+    if (index !== -1) {
+        queue[index].amount = (queue[index].amount || 0) + parseFloat(extraAmount);
+        if (isKvEnabled) {
+            await redis.set(KEYS.QUEUE(venueCode), JSON.stringify(queue));
+        }
+        return queue[index];
+    }
+    return null;
 }
 
 export async function getAllQueues() {
-    if (!requestsContainer) throw new Error("Database not configured");
-    // Fetch ALL requests (Careful with cost, but fine for small app)
-    const q = { query: "SELECT * FROM c" };
-    const allRequests = await query(requestsContainer, q);
-
-    // Group by venue
-    const grouped = {};
-    for (const req of allRequests) {
-        if (!grouped[req.venueCode]) grouped[req.venueCode] = [];
-        grouped[req.venueCode].push(req);
+    if (isKvEnabled) {
+        // This is inefficient on KV but good for admin demo. 
+        // Better: store a list of active venue codes.
+        const venues = await getVenues();
+        const all = {};
+        for (const v of venues) {
+            all[v.code] = await getQueue(v.code);
+        }
+        return all;
     }
-    return grouped;
+    return mock.queues;
 }
 
 // --- Users ---
-let usersContainer;
-if (database) {
-    usersContainer = database.container('users');
-}
-
 export async function createUser(userData) {
-    // userData: { username, password, createdAt }
-    if (!usersContainer) throw new Error("Database not configured");
+    const users = await getUsers();
+    if (users.find(u => u.username === userData.username)) {
+        throw new Error("Username already taken");
+    }
 
-    // Check if username exists
-    const q = {
-        query: "SELECT * FROM c WHERE c.username = @username",
-        parameters: [{ name: "@username", value: userData.username }]
-    };
-    const existing = await query(usersContainer, q);
-    if (existing.length > 0) throw new Error("Username already taken");
-
-    const newUser = {
-        id: Date.now().toString(), // partition key
-        ...userData,
-        type: 'user'
-    };
-
-    await usersContainer.items.create(newUser);
+    const newUser = { id: Date.now().toString(), ...userData, type: 'user' };
+    if (isKvEnabled) {
+        users.push(newUser);
+        await redis.set(KEYS.USERS, JSON.stringify(users));
+    } else {
+        mock.users.push(newUser);
+    }
     return newUser;
 }
 
+async function getUsers() {
+    if (isKvEnabled) {
+        const data = await redis.get(KEYS.USERS);
+        return data ? JSON.parse(data) : initialUsers;
+    }
+    return mock.users;
+}
+
 export async function getUser(username) {
-    if (!usersContainer) throw new Error("Database not configured");
-    const q = {
-        query: "SELECT * FROM c WHERE c.username = @username",
-        parameters: [{ name: "@username", value: username }]
-    };
-    const users = await query(usersContainer, q);
-    return users[0] || null;
+    const users = await getUsers();
+    return users.find(u => u.username === username) || null;
+}
+
+// --- Accountability ---
+export async function startNowPlaying(venueCode, requestId) {
+    const queue = await getQueue(venueCode);
+    const index = queue.findIndex(req => req.id === requestId);
+    if (index !== -1) {
+        queue[index].nowPlayingStartTime = Date.now();
+        if (isKvEnabled) await redis.set(KEYS.QUEUE(venueCode), JSON.stringify(queue));
+        return queue[index];
+    }
+    return null;
+}
+
+export async function markAsPlayedWithVerification(venueCode, requestId) {
+    const queue = await getQueue(venueCode);
+    const index = queue.findIndex(req => req.id === requestId);
+    if (index === -1) return { success: false, error: 'Not found' };
+
+    const request = queue[index];
+    if (request.nowPlayingStartTime) {
+        const duration = Math.floor((Date.now() - request.nowPlayingStartTime) / 1000);
+        if (duration < 60) return { success: false, error: 'Must play for 1 min' };
+        request.playDuration = duration;
+    }
+
+    request.status = 'played';
+    request.playedAt = Date.now();
+    if (Math.random() < 0.2) request.verificationSent = true;
+
+    if (isKvEnabled) await redis.set(KEYS.QUEUE(venueCode), JSON.stringify(queue));
+    await updateVenueStats(venueCode, 'played');
+    return { success: true, request };
+}
+
+export async function checkExpiredRequests(venueCode) {
+    const queue = await getQueue(venueCode);
+    const now = Date.now();
+    const timeout = 45 * 60 * 1000;
+    const expired = [];
+
+    queue.forEach(req => {
+        if (req.status === 'pending' && !req.refunded && (now - req.timestamp) > timeout) {
+            req.refunded = true;
+            req.status = 'refunded';
+            expired.push(req);
+        }
+    });
+
+    if (expired.length > 0) {
+        if (isKvEnabled) await redis.set(KEYS.QUEUE(venueCode), JSON.stringify(queue));
+        await updateVenueStats(venueCode, 'refunded', expired.length);
+    }
+    return expired;
+}
+
+export async function submitGuestVerification(venueCode, requestId, confirmed) {
+    const queue = await getQueue(venueCode);
+    const index = queue.findIndex(req => req.id === requestId);
+    if (index !== -1) {
+        queue[index].guestConfirmed = confirmed;
+        queue[index].guestConfirmedAt = Date.now();
+        if (isKvEnabled) await redis.set(KEYS.QUEUE(venueCode), JSON.stringify(queue));
+        await updateVenueStats(venueCode, confirmed ? 'verified_yes' : 'verified_no');
+        return queue[index];
+    }
+    return null;
+}
+
+export async function getPlayHistory(venueCode, limit = 20) {
+    const queue = await getQueue(venueCode);
+    return queue.filter(q => q.status === 'played').sort((a, b) => b.playedAt - a.playedAt).slice(0, limit);
+}
+
+// --- Stats ---
+export async function getVenueStats(venueCode) {
+    if (isKvEnabled) {
+        const data = await redis.get(KEYS.STATS(venueCode));
+        return data ? JSON.parse(data) : {
+            totalRequests: 0, playedRequests: 0, refundedRequests: 0,
+            guestConfirmedPlayed: 0, guestDeniedPlayed: 0
+        };
+    }
+    return mock.stats[venueCode] || { totalRequests: 0, playedRequests: 0, refundedRequests: 0 };
+}
+
+export async function updateVenueStats(venueCode, eventType, count = 1) {
+    const stats = await getVenueStats(venueCode);
+    switch (eventType) {
+        case 'created': stats.totalRequests += count; break;
+        case 'played': stats.playedRequests += count; break;
+        case 'refunded': stats.refundedRequests += count; break;
+        case 'verified_yes': stats.guestConfirmedPlayed += count; break;
+        case 'verified_no': stats.guestDeniedPlayed += count; break;
+    }
+    if (isKvEnabled) {
+        await redis.set(KEYS.STATS(venueCode), JSON.stringify(stats));
+    } else {
+        mock.stats[venueCode] = stats;
+    }
+    return stats;
+}
+
+export async function getAllVenueStats() {
+    const venues = await getVenues();
+    return Promise.all(venues.map(async (v) => ({
+        venueCode: v.code,
+        venueName: v.name,
+        ...(await getVenueStats(v.code))
+    })));
 }

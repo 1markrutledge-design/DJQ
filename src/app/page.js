@@ -246,6 +246,12 @@ export default function Home() {
 
                 </div>
             </main>
+
+            <footer style={{ marginTop: 'auto', padding: '20px', color: '#404040', fontSize: '0.8rem' }}>
+                <a href="/tennis-dashboard" style={{ color: 'inherit', textDecoration: 'none', opacity: 0.5 }}>
+                    Bot Metrics
+                </a>
+            </footer>
         </div>
     );
 }

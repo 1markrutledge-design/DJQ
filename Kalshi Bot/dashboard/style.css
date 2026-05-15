@@ -1,0 +1,281 @@
+:root {
+    --bg-color: #05070a;
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
+    --accent-color: #3b82f6;
+    --win-color: #10b981;
+    --loss-color: #ef4444;
+    --glow-color: rgba(59, 130, 246, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+    z-index: -1;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 1rem;
+}
+
+.logo h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.logo h1 span {
+    color: var(--accent-color);
+}
+
+.logo p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.status-bar {
+    display: flex;
+    gap: 2rem;
+}
+
+.status-item .label {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.status-item .value {
+    font-weight: 600;
+}
+
+.pulse {
+    color: var(--win-color);
+    animation: animate-pulse 2s infinite;
+}
+
+@keyframes animate-pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+.market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.market-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.market-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.coin-info h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+}
+
+.coin-info p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.price-badges {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.badge.bid { color: var(--win-color); border: 1px solid rgba(16, 185, 129, 0.2); }
+.badge.ask { color: var(--loss-color); border: 1px solid rgba(239, 68, 68, 0.2); }
+
+.chart-container {
+    height: 120px;
+    width: 100%;
+}
+
+.strategies-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.strategies-table th {
+    text-align: left;
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--card-border);
+    font-weight: 400;
+}
+
+.strategies-table td {
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.strat-name {
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.win-rate {
+    font-weight: 700;
+}
+
+.win-rate.positive { color: var(--win-color); }
+.win-rate.negative { color: var(--loss-color); }
+.win-rate.neutral { color: var(--text-secondary); }
+
+.side-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 2px;
+    color: var(--text-secondary);
+    font-weight: 400;
+}
+
+.loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 5rem;
+    color: var(--text-secondary);
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 4px;
+}
+
+/* Top Strategy Badge */
+.top-strategy-badge {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid var(--accent-color);
+    border-radius: 1rem;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+.top-strategy-badge .label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    display: block;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.top-strategy-badge .value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.top-strategy-badge .win-rate {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--win-color);
+}
+
+/* Bible Group Badges */
+.group-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.group-momentum {
+    background: rgba(247, 147, 26, 0.1);
+    color: #F7931A;
+    border: 1px solid rgba(247, 147, 26, 0.4);
+}
+
+.group-choppy {
+    background: rgba(148, 163, 184, 0.1);
+    color: #94a3b8;
+    border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.bible-stats {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+.bible-header {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 0.3rem;
+    display: flex;
+    justify-content: space-between;
+}

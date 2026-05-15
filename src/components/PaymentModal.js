@@ -1,26 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { CreditCard, Zap, Check } from 'lucide-react';
+import { Elements } from '@stripe/react-stripe-js';
+import getStripe from '../lib/getStripe';
+import CheckoutForm from './CheckoutForm';
 
 export default function PaymentModal({ song, title, onClose, onConfirm }) {
-    const [processing, setProcessing] = useState(false);
-    const [tipAmount, setTipAmount] = useState(3); // Default value
-
-    const handlePay = async () => {
-        setProcessing(true);
-        // Simulate network delay for "Apple Pay" feel
-        setTimeout(() => {
-            onConfirm({
-                song,
-                queueType: 'Standard', // Deprecated in UI but kept for schema
-                amount: tipAmount
-            });
-        }, 1500);
-    };
+    const [tipAmount, setTipAmount] = useState(1); // Default value
 
     // Scroll Picker Logic: Simple approach using scroll-snap
-    const amounts = [1, 2, 3, 4, 5];
+    const amounts = [0, 1, 2, 3, 4, 5];
 
     return (
         <div style={{
@@ -63,7 +52,7 @@ export default function PaymentModal({ song, title, onClose, onConfirm }) {
                             const itemHeight = 50;
                             const scrollTop = e.target.scrollTop;
                             const centerIndex = Math.round(scrollTop / itemHeight);
-                            if (amounts[centerIndex]) {
+                            if (amounts[centerIndex] !== undefined) {
                                 setTipAmount(amounts[centerIndex]);
                             }
                         }}
@@ -95,28 +84,44 @@ export default function PaymentModal({ song, title, onClose, onConfirm }) {
                     </div>
                 </div>
 
-                {/* Pay Button */}
-                <button
-                    onClick={handlePay}
-                    disabled={processing}
-                    className="btn"
-                    style={{
-                        background: 'black', color: 'white',
-                        border: '1px solid #333',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
-                        height: '56px', fontSize: '1.1rem'
-                    }}
-                >
-                    {processing ? (
-                        <span>Processing...</span>
+                {/* Payment OR Free Button */}
+                <div style={{ marginTop: '1rem' }}>
+                    {tipAmount === 0 ? (
+                        <button
+                            onClick={() => {
+                                onConfirm({
+                                    song,
+                                    queueType: 'Standard',
+                                    amount: 0,
+                                    paymentIntentId: null // No payment
+                                });
+                            }}
+                            className="btn btn-primary"
+                            style={{ padding: '0.75rem', width: '100%', fontSize: '1rem', fontWeight: 'bold' }}
+                        >
+                            Request for Free
+                        </button>
                     ) : (
-                        <>
-                            <span style={{ fontWeight: '900', letterSpacing: '-0.5px' }}>Pay ${tipAmount}.00</span> with Pay
-                        </>
+                        <Elements stripe={getStripe()}>
+                            <CheckoutForm
+                                key={tipAmount}
+                                amount={tipAmount}
+                                onPaymentSuccess={(paymentIntentId) => {
+                                    onConfirm({
+                                        song,
+                                        queueType: 'Premium',
+                                        amount: tipAmount,
+                                        paymentIntentId
+                                    });
+                                }}
+                            />
+                        </Elements>
                     )}
-                </button>
+                </div>
                 <p style={{ textAlign: 'center', fontSize: '0.75rem', color: '#525252', marginTop: '1rem' }}>
-                    This is a secure mock payment. No real money will be charged.
+                    {tipAmount === 0
+                        ? 'Free requests are added to the standard queue.'
+                        : 'Payments processed securely by Stripe. Only available on supported devices.'}
                 </p>
             </div>
 
@@ -129,6 +134,6 @@ export default function PaymentModal({ song, title, onClose, onConfirm }) {
                     scrollbar-width: none;
                 }
             `}</style>
-        </div>
+        </div >
     );
 }

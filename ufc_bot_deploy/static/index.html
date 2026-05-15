@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Trading Command Center</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #21262d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #58a6ff;
+            --profit-green: #3fb950;
+            --loss-red: #f85149;
+            --border-color: #30363d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+            border-radius: 16px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .last-updated {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-top: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .card-value.profit {
+            color: var(--profit-green);
+        }
+
+        .card-value.loss {
+            color: var(--loss-red);
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        /* Strategy Cards */
+        .strategy-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .strategy-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .strategy-icon {
+            font-size: 2rem;
+        }
+
+        .strategy-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .strategy-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-item {
+            padding: 10px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Leaderboard */
+        .leaderboard {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .leaderboard-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-rank {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .leaderboard-rank.gold {
+            background: linear-gradient(135deg, #ffd700, #ffb800);
+            color: #000;
+        }
+
+        .leaderboard-rank.silver {
+            background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+            color: #000;
+        }
+
+        .leaderboard-rank.bronze {
+            background: linear-gradient(135deg, #cd7f32, #a0522d);
+            color: #fff;
+        }
+
+        .leaderboard-name {
+            flex: 1;
+            margin-left: 12px;
+        }
+
+        .leaderboard-pnl {
+            font-weight: 600;
+        }
+
+        /* Charts */
+        .chart-container {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        /* Recent Trades */
+        .trades-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .trades-table th,
+        .trades-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .trades-table th {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .trades-table tr:hover {
+            background: var(--bg-secondary);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--accent-purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Error */
+        .error {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid var(--loss-red);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            color: var(--loss-red);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .card-value {
+                font-size: 1.5rem;
+            }
+
+            .strategy-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-purple);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-purple);
+            border-color: var(--accent-purple);
+        }
+
+        /* Simulated Badge */
+        .sim-badge {
+            font-size: 0.7rem;
+            background: #f0a500;
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+
+        /* Alerts */
+        .alerts-container {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--loss-red);
+            margin-bottom: 20px;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .alert-item:last-child {
+            border-bottom: none;
+        }
+
+        .alert-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Strategy Notes */
+        .notes-panel {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+
+        .notes-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .notes-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            background: var(--accent-purple);
+            color: white;
+            cursor: pointer;
+        }
+
+        .note-history {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .note-item {
+            padding: 8px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>🎯 Trading Command Center</h1>
+        <p class="subtitle">Real-time performance for all your trading bots</p>
+        <p class="last-updated" id="lastUpdated">Loading...</p>
+    </div>
+
+    <div id="content">
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading your trading stats...</p>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_URL = '/api/dashboard/stats';
+        const REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
+
+        // Format currency
+        function formatCurrency(value) {
+            const prefix = value >= 0 ? '+$' : '-$';
+            return prefix + Math.abs(value).toFixed(2);
+        }
+
+        // Format percentage
+        function formatPercent(value) {
+            return value.toFixed(1) + '%';
+        }
+
+        // Get P&L class
+        function getPnlClass(value) {
+            return value >= 0 ? 'profit' : 'loss';
+        }
+
+        // Current filter state
+        let currentFilter = 'all';
+
+        // Set filter
+        function setFilter(filter) {
+            currentFilter = filter;
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase().includes(filter) ||
+                    (filter === 'all' && btn.textContent.includes('All'))) {
+                    btn.classList.add('active');
+                }
+            });
+            // Re-render with filter (for now just visual feedback)
+            // TODO: Implement actual filtering of displayed data
+        }
+
+        // Render the dashboard
+        function renderDashboard(data) {
+            const content = document.getElementById('content');
+
+            content.innerHTML = `
+                <!-- Portfolio Banner -->
+                <div class="card" style="background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%); margin-bottom: 20px;">
+                    <div class="card-header">
+                        <span class="card-title">💰 Total Portfolio</span>
+                    </div>
+                    <div class="card-value" style="color: #3fb950;">
+                        $${data.balance ? data.balance.total_portfolio.toFixed(2) : '0.00'}
+                    </div>
+                    <p class="card-subtitle">Cash: $${data.balance ? data.balance.available.toFixed(2) : '0.00'} | Positions: $${data.balance ? (data.balance.position_value || 0).toFixed(2) : '0.00'}</p>
+                </div>
+                
+                <!-- Filter Bar -->
+                <div class="filter-bar">
+                    <button class="filter-btn active" onclick="setFilter('all')">All Bots</button>
+                    <button class="filter-btn" onclick="setFilter('real')">💵 Real Only</button>
+                    <button class="filter-btn" onclick="setFilter('simulated')">🧪 Simulated Only</button>
+                </div>
+                
+                <!-- Alerts Section -->
+                ${data.alerts && data.alerts.length > 0 ? `
+                <div class="alerts-container">
+                    <h3 style="margin-bottom: 15px;">⚠️ Alerts</h3>
+                    ${data.alerts.slice(0, 5).map(alert => `
+                        <div class="alert-item">
+                            <span class="alert-icon">🔴</span>
+                            <span><strong>${alert.bot}</strong> lost $${Math.abs(alert.amount).toFixed(2)} on ${alert.date}</span>
+                            ${alert.is_today ? '<span class="sim-badge" style="background: #f85149; color: white;">TODAY</span>' : ''}
+                        </div>
+                    `).join('')}
+                </div>
+                ` : ''}
+                
+                <!-- P&L Overview Cards -->
+                <div class="grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">💵 Real P&L</span>
+                            <span class="card-icon">💰</span>
+                        </div>
+                        <div class="card-value ${getPnlClass(data.real_pnl?.all_time || 0)}">
+                            ${formatCurrency(data.real_pnl?.all_time || 0)}
+                        </div>
+                        <p class="card-subtitle">${data.real_pnl?.trades || 0} real trades</p>
+                    </div>
+                    
+                    <div class="card" style="border: 1px dashed #f0a500;">
+                        <div class="card-header">
+                            <span class="card-title">🧪 Simulated P&L</span>
+                            <span class="sim-badge">DRY RUN</span>
+                        </div>
+                        <div class="card-value ${getPnlClass(data.simulated_pnl?.all_time || 0)}">
+                            ${formatCurrency(data.simulated_pnl?.all_time || 0)}
+                        </div>
+                        <p class="card-subtitle">${data.simulated_pnl?.trades || 0} simulated trades</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Today's P&L</span>
+                            <span class="card-icon">📅</span>
+                        </div>
+                        <div class="card-value ${getPnlClass(data.overview.today_pnl || 0)}">
+                            ${formatCurrency(data.overview.today_pnl || 0)}
+                        </div>
+                        <p class="card-subtitle">${data.overview.today_trades || 0} trades today</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Real Win Rate</span>
+                            <span class="card-icon">🎯</span>
+                        </div>
+                        <div class="card-value">${formatPercent(data.overview.win_rate)}</div>
+                        <p class="card-subtitle">Based on net P&L per bet</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Active / Pending</span>
+                            <span class="card-icon">⏳</span>
+                        </div>
+                        <div class="card-value">${data.overview.active_positions} / ${data.overview.pending_orders}</div>
+                        <p class="card-subtitle">Positions / Orders</p>
+                    </div>
+                </div>
+                
+                <!-- Strategy Cards -->
+                <div class="grid">
+                    ${renderStrategyCard('🥊', data.strategies.ufc)}
+                    ${renderStrategyCard('🌦️', data.strategies.weather)}
+                    ${renderStrategyCard('🌡️', data.strategies.climate)}
+                    ${data.strategies.sports && data.strategies.sports.total_trades > 0 ? renderStrategyCard('🏀', data.strategies.sports) : ''}
+                    ${data.strategies.other && data.strategies.other.total_trades > 0 ? renderStrategyCard('📦', data.strategies.other) : ''}
+                </div>
+                
+                <!-- Bot Leaderboard -->
+                <div class="chart-container" style="margin-bottom: 20px;">
+                    <h3 class="chart-title">🏆 Bot Leaderboard</h3>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        ${(data.leaderboard || []).map(item => `
+                            <div class="leaderboard-item">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div class="leaderboard-rank ${item.rank === 1 ? 'gold' : item.rank === 2 ? 'silver' : item.rank === 3 ? 'bronze' : ''}">${item.rank}</div>
+                                    <span class="leaderboard-name">${item.bot}${item.is_simulated ? '<span class="sim-badge">SIM</span>' : ''}</span>
+                                </div>
+                                <div style="display: flex; gap: 20px;">
+                                    <span style="color: var(--text-secondary);">${item.trades} trades</span>
+                                    <span style="color: var(--text-secondary);">${item.win_rate}% WR</span>
+                                    <span class="leaderboard-pnl ${getPnlClass(item.pnl)}">${formatCurrency(item.pnl)}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <!-- Charts Row -->
+                <div class="grid">
+                    <div class="chart-container" style="grid-column: span 2;">
+                        <h3 class="chart-title">📈 Cumulative P&L</h3>
+                        <canvas id="pnlChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3 class="chart-title">🥧 Profit by Strategy</h3>
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Leaderboards -->
+                <div class="grid">
+                    <div class="leaderboard">
+                        <h3 class="leaderboard-title">🏙️ Top Cities</h3>
+                        ${renderLeaderboard(data.leaderboards.cities, 'city')}
+                    </div>
+                    
+                    <div class="leaderboard">
+                        <h3 class="leaderboard-title">🥊 Top Fighters</h3>
+                        ${renderLeaderboard(data.leaderboards.fighters, 'fighter')}
+                    </div>
+                </div>
+                
+                <!-- Recent Trades -->
+                <div class="chart-container">
+                    <h3 class="chart-title">📋 Recent Trades</h3>
+                    <table class="trades-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Market</th>
+                                <th>Action</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>P&L</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.recent_trades.map(trade => `
+                                <tr>
+                                    <td>${new Date(trade.date).toLocaleDateString()}</td>
+                                    <td>${trade.ticker}</td>
+                                    <td>${trade.action.toUpperCase()}</td>
+                                    <td>${trade.count}</td>
+                                    <td>${trade.price}¢</td>
+                                    <td class="${getPnlClass(trade.pnl)}">${formatCurrency(trade.pnl)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- P&L Calendar -->
+                <div class="chart-container">
+                    <h3 class="chart-title">📅 Daily P&L Calendar</h3>
+                    <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">
+                        ${(data.daily_calendar || []).slice(0, 30).map(day => `
+                            <div class="stat-item" style="text-align: center;">
+                                <div class="stat-label">${new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+                                <div class="stat-value ${getPnlClass(day.pnl)}" style="font-size: 1rem;">
+                                    ${formatCurrency(day.pnl)}
+                                </div>
+                                <div style="font-size: 0.7rem; color: var(--text-secondary);">${day.trades} trades</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <!-- Debug Info (temporary) -->
+                ${data.debug ? `
+                <div class="chart-container" style="border: 1px solid #f85149;">
+                    <h3 class="chart-title">🔧 Debug Info (Remove after fixing)</h3>
+                    <p><strong>Sample Tickers:</strong> ${(data.debug.sample_tickers || []).join(', ')}</p>
+                    <p><strong>Counts:</strong> UFC: ${data.debug.ufc_count}, Weather: ${data.debug.weather_count}, Climate: ${data.debug.climate_count}, Sports: ${data.debug.sports_count || 0}, Other: ${data.debug.other_count}</p>
+                </div>
+                ` : ''}
+                
+                <!-- Simulated Trades Section (Dry Run) -->
+                <div id="simulatedSection" class="chart-container" style="border: 2px dashed #f0a500; margin-top: 20px; display: none;">
+                    <h3 class="chart-title">🧪 Dry Run Simulator <span style="color: #f0a500; font-size: 0.8rem;">(NOT REAL MONEY)</span></h3>
+                    <p style="margin-bottom: 15px; color: #f0a500;">⚠️ These trades are SIMULATED. No real money is being used.</p>
+                    <div id="simulatedContent">Loading simulated trades...</div>
+                </div>
+            `;
+
+            // Render charts
+            renderCharts(data);
+
+            // Update timestamp
+            document.getElementById('lastUpdated').textContent =
+                `Last updated: ${new Date(data.generated_at).toLocaleString()}`;
+        }
+
+        function renderStrategyCard(icon, strategy) {
+            return `
+                <div class="strategy-card" ${strategy.is_simulated ? 'style="border: 1px dashed #f0a500;"' : ''}>
+                    <div class="strategy-header">
+                        <span class="strategy-icon">${icon}</span>
+                        <span class="strategy-name">${strategy.name}${strategy.is_simulated ? '<span class="sim-badge">SIM</span>' : ''}</span>
+                    </div>
+                    
+                    <!-- Main Stats Row -->
+                    <div class="strategy-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">All-Time P&L</div>
+                            <div class="stat-value ${getPnlClass(strategy.total_pnl)}">
+                                ${formatCurrency(strategy.total_pnl)}
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Today's P&L</div>
+                            <div class="stat-value ${getPnlClass(strategy.today_pnl || 0)}">
+                                ${formatCurrency(strategy.today_pnl || 0)}
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Win Rate</div>
+                            <div class="stat-value">${formatPercent(strategy.win_rate)}</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Wins / Losses</div>
+                            <div class="stat-value"><span style="color: var(--profit-green)">${strategy.wins || 0}</span> / <span style="color: var(--loss-red)">${strategy.losses || 0}</span></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Strategy Improvement Section -->
+                    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 10px;">📊 Strategy Insights</div>
+                        <div class="strategy-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">Avg Buy Price</div>
+                                <div class="stat-value">${strategy.avg_buy_price || 0}¢</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Avg Sell Price</div>
+                                <div class="stat-value">${strategy.avg_sell_price || 0}¢</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Best Entry</div>
+                                <div class="stat-value" style="color: var(--profit-green);">${strategy.best_entry || 0}¢</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Worst Entry</div>
+                                <div class="stat-value" style="color: var(--loss-red);">${strategy.worst_entry || 0}¢</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Price Spread</div>
+                                <div class="stat-value ${getPnlClass(strategy.price_spread || 0)}">${strategy.price_spread || 0}¢</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Buys / Sells</div>
+                                <div class="stat-value">${strategy.buys || 0} / ${strategy.sells || 0}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderLeaderboard(items, nameKey) {
+            if (!items || items.length === 0) {
+                return '<p style="color: var(--text-secondary); text-align: center;">No data yet</p>';
+            }
+
+            return items.map((item, index) => {
+                let rankClass = '';
+                if (index === 0) rankClass = 'gold';
+                else if (index === 1) rankClass = 'silver';
+                else if (index === 2) rankClass = 'bronze';
+
+                return `
+                    <div class="leaderboard-item">
+                        <span class="leaderboard-rank ${rankClass}">${index + 1}</span>
+                        <span class="leaderboard-name">${item[nameKey]}</span>
+                        <span class="leaderboard-pnl ${getPnlClass(item.pnl)}">
+                            ${formatCurrency(item.pnl)}
+                        </span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderCharts(data) {
+            // Cumulative P&L Line Chart
+            const pnlCtx = document.getElementById('pnlChart').getContext('2d');
+            new Chart(pnlCtx, {
+                type: 'line',
+                data: {
+                    labels: data.chart_data.cumulative_pnl.map(d => d.date),
+                    datasets: [{
+                        label: 'Cumulative P&L',
+                        data: data.chart_data.cumulative_pnl.map(d => d.value),
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            ticks: { color: '#8b949e' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#8b949e' }
+                        }
+                    }
+                }
+            });
+
+            // Strategy Distribution Pie Chart
+            const pieCtx = document.getElementById('pieChart').getContext('2d');
+            new Chart(pieCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.chart_data.strategy_distribution.map(d => d.name),
+                    datasets: [{
+                        data: data.chart_data.strategy_distribution.map(d => Math.abs(d.value)),
+                        backgroundColor: ['#8b5cf6', '#58a6ff', '#3fb950']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#f0f6fc' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function showError(message) {
+            document.getElementById('content').innerHTML = `
+                <div class="error">
+                    <h3>⚠️ Error Loading Dashboard</h3>
+                    <p>${message}</p>
+                    <p style="margin-top: 10px; font-size: 0.9rem;">Will retry in 30 seconds...</p>
+                </div>
+            `;
+        }
+
+        async function loadDashboard() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('Failed to fetch data');
+
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+
+                renderDashboard(data);
+
+                // Also load simulated trades (dry run)
+                loadSimulatedTrades();
+            } catch (error) {
+                console.error('Dashboard error:', error);
+                showError(error.message);
+            }
+        }
+
+        async function loadSimulatedTrades() {
+            try {
+                const response = await fetch('/api/dashboard/simulated');
+                if (!response.ok) return;
+
+                const data = await response.json();
+
+                const section = document.getElementById('simulatedSection');
+                const content = document.getElementById('simulatedContent');
+
+                if (data.error === "Storage not configured" || data.total_simulated_trades === 0) {
+                    section.style.display = 'none';
+                    return;
+                }
+
+                section.style.display = 'block';
+                content.innerHTML = `
+                    <div class="grid">
+                        <div class="stat-item" style="text-align: center;">
+                            <div class="stat-label">Weather (Simulated)</div>
+                            <div class="stat-value ${data.weather.simulated_pnl >= 0 ? 'profit' : 'loss'}">
+                                ${formatCurrency(data.weather.simulated_pnl)}
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">${data.weather.total_trades} trades</div>
+                        </div>
+                        <div class="stat-item" style="text-align: center;">
+                            <div class="stat-label">Climate (Simulated)</div>
+                            <div class="stat-value ${data.climate.simulated_pnl >= 0 ? 'profit' : 'loss'}">
+                                ${formatCurrency(data.climate.simulated_pnl)}
+                            </div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary);">${data.climate.total_trades} trades</div>
+                        </div>
+                        <div class="stat-item" style="text-align: center; background: linear-gradient(135deg, #3d2c00, #5a4100);">
+                            <div class="stat-label">Total Simulated P&L</div>
+                            <div class="stat-value ${data.total_simulated_pnl >= 0 ? 'profit' : 'loss'}">
+                                ${formatCurrency(data.total_simulated_pnl)}
+                            </div>
+                            <div style="font-size: 0.8rem; color: #f0a500;">If this was real!</div>
+                        </div>
+                    </div>
+                    ${data.weather.recent_trades.length > 0 || data.climate.recent_trades.length > 0 ? `
+                    <h4 style="margin-top: 20px; margin-bottom: 10px;">Recent Simulated Trades</h4>
+                    <table class="trades-table">
+                        <thead>
+                            <tr><th>Date</th><th>Ticker</th><th>Action</th><th>Qty</th><th>Price</th><th>P&L</th></tr>
+                        </thead>
+                        <tbody>
+                            ${[...data.weather.recent_trades, ...data.climate.recent_trades]
+                            .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                            .slice(0, 10)
+                            .map(t => `
+                                    <tr>
+                                        <td>${new Date(t.timestamp).toLocaleDateString()}</td>
+                                        <td>${t.ticker}</td>
+                                        <td>${t.action.toUpperCase()}</td>
+                                        <td>${t.count}</td>
+                                        <td>${t.price}¢</td>
+                                        <td class="${t.cashflow >= 0 ? 'profit' : 'loss'}">${formatCurrency(t.cashflow)}</td>
+                                    </tr>
+                                `).join('')}
+                        </tbody>
+                    </table>
+                    ` : ''}
+                `;
+            } catch (error) {
+                console.log('Simulated trades not available:', error);
+            }
+        }
+
+        // Initial load
+        loadDashboard();
+
+        // Auto-refresh every 5 minutes
+        setInterval(loadDashboard, REFRESH_INTERVAL);
+    </script>
+</body>
+
+</html>

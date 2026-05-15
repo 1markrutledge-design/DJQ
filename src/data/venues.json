@@ -3,7 +3,14 @@
     "id": "1764961430151",
     "name": "Test",
     "code": "TEST24",
-    "createdAt": 1764961430151
+    "createdAt": 1764961430151,
+    "stats": {
+      "totalRequests": 0,
+      "playedRequests": 0,
+      "refundedRequests": 2,
+      "guestConfirmedPlayed": 0,
+      "guestDeniedPlayed": 0
+    }
   },
   {
     "id": "1764961673523",
@@ -16,5 +23,12 @@
     "name": "TEST24",
     "code": "TEST28",
     "createdAt": 1766079090438
+  },
+  {
+    "id": "1770393396818",
+    "name": "Test Venue 2026",
+    "code": "TESTVENUE2026",
+    "password": "testpass123",
+    "createdAt": 1770393396818
   }
 ]

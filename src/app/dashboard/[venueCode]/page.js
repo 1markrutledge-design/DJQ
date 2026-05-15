@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import QueueList from '@/components/QueueList';
-import { fetchQueue, removeSong, validateVenueLogin } from '../../actions'; // Added validateVenueLogin
+import { fetchQueue, removeSong, validateVenueLogin, checkForExpiredRequests } from '../../actions';
 
 export default function DashboardPage({ params }) {
     const { venueCode } = params;
@@ -12,6 +12,8 @@ export default function DashboardPage({ params }) {
     const [error, setError] = useState('');
 
     const load = async () => {
+        // Check for expired requests (auto-refund)
+        await checkForExpiredRequests(venueCode);
         const data = await fetchQueue(venueCode);
         if (Array.isArray(data)) setQueue(data);
     };
@@ -26,9 +28,33 @@ export default function DashboardPage({ params }) {
     }, [venueCode, isAuthenticated]);
 
     const handleComplete = async (requestId) => {
+        // Find request to get spotifyUri
+        const req = queue.find(r => r.id === requestId);
+
         // Optimistic update
-        setQueue(prev => prev.filter(req => req.id !== requestId));
+        setQueue(prev => prev.filter(r => r.id !== requestId));
         await removeSong(venueCode, requestId);
+
+        // Add to Spotify Queue
+        if (req && req.song && req.song.spotifyUri) {
+            try {
+                const res = await fetch('/api/spotify/queue', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        venueCode,
+                        spotifyUri: req.song.spotifyUri
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(`Failed to add to Spotify Queue: ${data.error || 'Unknown error'}`);
+                }
+            } catch (err) {
+                console.error("Spotify Queue add error:", err);
+            }
+        }
+
         load(); // Re-fetch to be safe
     };
 
@@ -91,6 +117,25 @@ export default function DashboardPage({ params }) {
                 </div>
             </div>
 
+            {/* Spotify Connection Header */}
+            <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'center' }}>
+                <a
+                    href={`/api/spotify/login?venueCode=${venueCode}`}
+                    className="btn"
+                    style={{
+                        background: '#1DB954',
+                        color: 'white',
+                        padding: '0.75rem 1.5rem',
+                        borderRadius: '99px',
+                        textDecoration: 'none',
+                        fontWeight: 'bold',
+                        display: 'inline-block'
+                    }}
+                >
+                    Connect to Spotify
+                </a>
+            </div>
+
             <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem' }}>
                 <div style={{ background: '#262626', padding: '1rem', borderRadius: '12px', flex: 1 }}>
                     <p style={{ color: '#a3a3a3', fontSize: '0.8rem' }}>QUEUE LENGTH</p>
@@ -105,7 +150,7 @@ export default function DashboardPage({ params }) {
             </div>
 
             <h2 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>Current Queue</h2>
-            <QueueList queue={queue} onComplete={handleComplete} />
+            <QueueList queue={queue} onComplete={handleComplete} venueCode={venueCode} />
         </div>
     );
 }

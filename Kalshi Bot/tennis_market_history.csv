@@ -1,0 +1,7 @@
+timestamp,ticker,player,occurrence_time,yes_bid,yes_ask,last_price,delta,result,title
+2026-04-29T22:23:11.288710+00:00,KXATPMATCH-26APR30RUUBLO-RUU,Casper Ruud,2026-04-30T11:00:00Z,73,74,74,0,,Will Casper Ruud win the Ruud vs Blockx: Quarterfinal match?
+2026-04-29T22:23:11.290414+00:00,KXATPMATCH-26APR30RUUBLO-BLO,Alexander Blockx,2026-04-30T11:00:00Z,26,27,27,0,,Will Alexander Blockx win the Ruud vs Blockx: Quarterfinal match?
+2026-04-29T22:23:11.290712+00:00,KXATPMATCH-26APR30COBZVE-ZVE,Alexander Zverev,2026-04-30T11:00:00Z,71,72,72,0,,Will Alexander Zverev win the Cobolli vs Zverev: Quarterfinal match?
+2026-04-29T22:23:11.290865+00:00,KXATPMATCH-26APR30COBZVE-COB,Flavio Cobolli,2026-04-30T11:00:00Z,28,29,29,0,,Will Flavio Cobolli win the Cobolli vs Zverev: Quarterfinal match?
+2026-04-29T22:23:11.290984+00:00,KXWTAMATCH-26APR30BAPAND-BAP,Hailey Baptiste,2026-04-30T17:00:00Z,30,31,31,0,,Will Hailey Baptiste win the Baptiste vs Andreeva: Semifinal match?
+2026-04-29T22:23:11.291122+00:00,KXWTAMATCH-26APR30BAPAND-AND,Mirra Andreeva,2026-04-30T17:00:00Z,69,70,70,0,,Will Mirra Andreeva win the Baptiste vs Andreeva: Semifinal match?

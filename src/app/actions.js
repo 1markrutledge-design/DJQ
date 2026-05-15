@@ -3,6 +3,8 @@
 import { getVenues, saveVenue, addToQueue, getSongs, getQueue, removeFromQueue, getAllQueues, updateRequestAmount } from '@/lib/db';
 import { redirect } from 'next/navigation';
 
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 export async function fetchQueue(venueCode) {
     const allRequests = await getQueue(venueCode);
     return allRequests.filter(req => req.status === 'pending');
@@ -108,8 +110,10 @@ export async function submitSongRequest(venueCode, requestData) {
     }
 }
 
+import songsData from '@/data/songs.json';
+
 export async function fetchSongs() {
-    return await getSongs();
+    return songsData;
 }
 
 export async function createNewSong(formData) {
@@ -226,4 +230,145 @@ export async function login(formData) {
     }
 
     return { error: "Your login info is wrong. Please try again." };
+}
+
+// --- Accountability System Actions ---
+
+export async function startSongNowPlaying(venueCode, requestId) {
+    try {
+        const { startNowPlaying, checkExpiredRequests } = await import('@/lib/db');
+
+        // Check for expired requests first
+        await checkExpiredRequests(venueCode);
+
+        const result = await startNowPlaying(venueCode, requestId);
+        if (result) {
+            return { success: true, request: result };
+        }
+        return { error: 'Request not found' };
+    } catch (e) {
+        return { error: e.message };
+    }
+}
+
+export async function markSongAsPlayed(venueCode, requestId) {
+    try {
+        const { markAsPlayedWithVerification, getQueue, updateVenueStats } = await import('@/lib/db');
+
+        // 1. Get the request to find the Payment Intent ID
+        const queue = await getQueue(venueCode);
+        const request = queue.find(r => r.id === requestId);
+
+        if (request && request.paymentIntentId && !request.captured) {
+            try {
+                // 2. Capture the payment in Stripe
+                await stripe.paymentIntents.capture(request.paymentIntentId);
+                request.captured = true;
+            } catch (stripeError) {
+                console.error("Stripe Capture Error:", stripeError);
+                // We continue anyway, but log it. 
+                // In a real app, you might want to retry.
+            }
+        }
+
+        // 3. Mark as played in DB
+        const result = await markAsPlayedWithVerification(venueCode, requestId);
+        return result;
+    } catch (e) {
+        return { success: false, error: e.message };
+    }
+}
+
+export async function submitVerificationFeedback(venueCode, requestId, confirmed) {
+    try {
+        const { submitGuestVerification } = await import('@/lib/db');
+        const result = await submitGuestVerification(venueCode, requestId, confirmed);
+        if (result) {
+            return { success: true };
+        }
+        return { error: 'Request not found' };
+    } catch (e) {
+        return { error: e.message };
+    }
+}
+
+export async function fetchPlayHistory(venueCode, limit = 20) {
+    try {
+        const { getPlayHistory, checkExpiredRequests } = await import('@/lib/db');
+
+        // Check for expired requests
+        await checkExpiredRequests(venueCode);
+
+        const history = await getPlayHistory(venueCode, limit);
+        return { success: true, history };
+    } catch (e) {
+        return { error: e.message };
+    }
+}
+
+export async function fetchVenueReputation(venueCode) {
+    try {
+        const { getVenueStats } = await import('@/lib/db');
+        const stats = await getVenueStats(venueCode);
+        return { success: true, stats };
+    } catch (e) {
+        return { error: e.message };
+    }
+}
+
+export async function fetchAllVenueReputation() {
+    try {
+        const { getAllVenueStats } = await import('@/lib/db');
+        const stats = await getAllVenueStats();
+        return { success: true, stats };
+    } catch (e) {
+        return { error: e.message };
+    }
+}
+
+export async function checkForExpiredRequests(venueCode) {
+    try {
+        const { checkExpiredRequests } = await import('@/lib/db');
+        const refunded = await checkExpiredRequests(venueCode);
+
+        // Cancel authorizations for expired requests
+        for (const req of refunded) {
+            if (req.paymentIntentId && !req.captured) {
+                try {
+                    await stripe.paymentIntents.cancel(req.paymentIntentId);
+                } catch (stripeError) {
+                    console.error("Stripe Cancel Error for expired req:", stripeError);
+                }
+            }
+        }
+
+        return { success: true, refundedCount: refunded.length, refunded };
+    } catch (e) {
+        return { error: e.message };
+    }
+}
+
+export async function refundRequest(venueCode, requestId) {
+    try {
+        const { getQueue, removeFromQueue } = await import('@/lib/db');
+
+        // 1. Get the request
+        const queue = await getQueue(venueCode);
+        const request = queue.find(r => r.id === requestId);
+
+        if (request && request.paymentIntentId && !request.captured) {
+            try {
+                // 2. Cancel the authorization in Stripe
+                await stripe.paymentIntents.cancel(request.paymentIntentId);
+            } catch (stripeError) {
+                console.error("Stripe Cancel Error:", stripeError);
+            }
+        }
+
+        // 3. Remove from queue (mark as played/removed)
+        await removeFromQueue(venueCode, requestId);
+        return { success: true };
+    } catch (e) {
+        return { error: e.message };
+    }
 }

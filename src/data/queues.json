@@ -119,7 +119,9 @@
       "amount": 3,
       "id": "1766372359274",
       "timestamp": 1766372359274,
-      "status": "pending"
+      "status": "refunded",
+      "refunded": true,
+      "refundedAt": 1770395862001
     },
     {
       "song": {
@@ -133,7 +135,9 @@
       "amount": 1,
       "id": "1766372351964",
       "timestamp": 1766372351964,
-      "status": "pending"
+      "status": "refunded",
+      "refunded": true,
+      "refundedAt": 1770395862001
     },
     {
       "song": {

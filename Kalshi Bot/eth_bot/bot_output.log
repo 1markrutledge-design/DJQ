@@ -1,0 +1,27 @@
+/Users/markrutledge/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+[11:15:56] ==============================================================
+[11:15:56]   ETH DUAL-STRATEGY BOT  —  Starting
+[11:15:56] ==============================================================
+[11:15:56]   Series        : KXETH15M
+[11:15:56]   Trade size    : 1 share(s)
+[11:15:56]   Poll interval : 2.0s
+[11:15:56] 
+[11:15:56]   STRATEGY A — Late Dip Buyer
+[11:15:56]     Trigger : YES ask ≤ 30¢
+[11:15:56]     Window  : 1–5 min remaining
+[11:15:56]     Action  : BUY YES at Maker Price (Ask - 1)
+[11:15:56]     Hold    : To expiry
+[11:15:56]     Expect  : ~48 trades/day, 25.0% win, +11.44¢ EV/share
+[11:15:56] 
+[11:15:56]   STRATEGY B — Fast Momentum Lock
+[11:15:56]     Trigger : YES ask ≥ 75¢
+[11:15:56]     Window  : 3–8 min remaining
+[11:15:56]     Action  : BUY YES at Maker Price (Ask - 1)
+[11:15:56]     Hold    : To expiry
+[11:15:56]     Expect  : ~41 trades/day, 85.4% win, +3.68¢ EV/share
+[11:15:56] ==============================================================
+[11:16:54]   Cycle   30 | 1 open markets | none in 1–8min window | today: A=0 B=0
+[11:17:54]   Cycle   60 | 1 open markets | none in 1–8min window | today: A=0 B=0
+[11:18:54]   Cycle   90 | 1 open markets | none in 1–8min window | today: A=0 B=0
+[11:19:54]   Cycle  120 | 1 open markets | none in 1–8min window | today: A=0 B=0

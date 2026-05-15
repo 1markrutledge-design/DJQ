@@ -1,0 +1,4 @@
+azure-functions
+cryptography
+requests
+azure-storage-blob

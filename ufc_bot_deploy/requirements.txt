@@ -1,0 +1,7 @@
+azure-functions
+requests
+python-dotenv
+pytz
+cryptography
+azure-data-tables
+sendgrid

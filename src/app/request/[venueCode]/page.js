@@ -1,13 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { submitSongRequest, fetchSongs, fetchQueue, boostRequest } from '../../actions'; // Adjust import based on depth
+import { submitSongRequest, fetchQueue, boostRequest, fetchPlayHistory, submitVerificationFeedback } from '../../actions';
 import SongCard from '@/components/SongCard';
 import PaymentModal from '@/components/PaymentModal';
 import { Search, Home as HomeIcon } from 'lucide-react';
 
-// We load songs on the client for instant search for this prototype
-// In a real app we'd filter on the server
+// Loading songs from Spotify API dynamically based on user search input
 import { useEffect } from 'react';
 
 export default function RequestPage({ params }) {
@@ -19,15 +18,47 @@ export default function RequestPage({ params }) {
 
     // New State for Queue/Boost features
     const [queue, setQueue] = useState([]);
-    const [viewMode, setViewMode] = useState('search'); // 'search' | 'queue'
+    const [viewMode, setViewMode] = useState('search'); // 'search' | 'queue' | 'history'
     const [boostTarget, setBoostTarget] = useState(null);
+    const [playHistory, setPlayHistory] = useState([]);
+    const [pendingVerifications, setPendingVerifications] = useState([]);
 
     useEffect(() => {
-        fetchSongs().then(setSongs);
         loadQueue();
-        const interval = setInterval(loadQueue, 5000);
+        loadPlayHistory();
+        const interval = setInterval(() => {
+            loadQueue();
+            loadPlayHistory();
+        }, 5000);
         return () => clearInterval(interval);
-    }, []);
+    }, [venueCode]);
+
+    // Live Spotify Search Debounce effect
+    useEffect(() => {
+        const fetchSpotifySearch = async () => {
+            if (!query.trim()) {
+                setSongs([]);
+                return;
+            }
+            try {
+                const res = await fetch(`/api/spotify/search?q=${encodeURIComponent(query)}`);
+                const data = await res.json();
+                if (data.songs) {
+                    setSongs(data.songs);
+                }
+            } catch (err) {
+                console.error("Search error", err);
+            }
+        };
+
+        const timer = setTimeout(() => {
+            if (viewMode === 'search') {
+                fetchSpotifySearch();
+            }
+        }, 500); // 500ms debounce
+
+        return () => clearTimeout(timer);
+    }, [query, viewMode]);
 
     async function loadQueue() {
         try {
@@ -38,10 +69,30 @@ export default function RequestPage({ params }) {
         }
     }
 
-    const filteredSongs = songs.filter(s =>
-        s.title.toLowerCase().includes(query.toLowerCase()) ||
-        s.artist.toLowerCase().includes(query.toLowerCase())
-    );
+    async function loadPlayHistory() {
+        try {
+            const res = await fetchPlayHistory(venueCode, 20);
+            if (res.success) {
+                setPlayHistory(res.history);
+                // Find pendingverifications
+                const pending = res.history.filter(h => h.verificationSent && h.guestConfirmed === null);
+                setPendingVerifications(pending);
+            }
+        } catch (e) {
+            console.error("Failed to load history", e);
+        }
+    }
+
+    const handleVerification = async (requestId, confirmed) => {
+        const res = await submitVerificationFeedback(venueCode, requestId, confirmed);
+        if (res.success) {
+            setNotification({ type: 'success', message: confirmed ? 'Thanks for confirming!' : 'Feedback received' });
+            loadPlayHistory();
+        }
+        setTimeout(() => setNotification(null), 3000);
+    };
+
+    const filteredSongs = songs; // We now rely on the API for filtering
 
     const handlePaymentConfirm = async (paymentData) => {
         if (boostTarget) {
@@ -95,6 +146,15 @@ export default function RequestPage({ params }) {
                 >
                     Live Queue
                 </button>
+                <button
+                    onClick={() => setViewMode('history')}
+                    style={{ flex: 1, padding: '8px', borderRadius: '8px', border: 'none', background: viewMode === 'history' ? 'white' : 'transparent', color: viewMode === 'history' ? 'black' : 'white', fontWeight: 'bold', position: 'relative' }}
+                >
+                    Play History
+                    {pendingVerifications.length > 0 && (
+                        <span style={{ position: 'absolute', top: '2px', right: '2px', background: '#ef4444', width: '8px', height: '8px', borderRadius: '50%' }} />
+                    )}
+                </button>
             </div>
 
             {viewMode === 'search' ? (
@@ -123,7 +183,7 @@ export default function RequestPage({ params }) {
                         )}
                     </div>
                 </>
-            ) : (
+            ) : viewMode === 'queue' ? (
                 /* LIVE QUEUE VIEW */
                 <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     {queue.length === 0 ? (
@@ -152,7 +212,64 @@ export default function RequestPage({ params }) {
                         ))
                     )}
                 </div>
-            )}
+            ) : viewMode === 'history' ? (
+                /* PLAY HISTORY VIEW */
+                <div className="animate-fade-in">
+                    {/* Pending Verifications */}
+                    {pendingVerifications.length > 0 && (
+                        <div style={{ marginBottom: '1.5rem' }}>
+                            <h3 style={{ fontSize: '1.1rem', marginBottom: '0.75rem', color: '#fbbf24' }}>Verification Needed</h3>
+                            {pendingVerifications.map(req => (
+                                <div key={req.id} className="card" style={{ borderLeft: '4px solid #fbbf24', marginBottom: '0.75rem' }}>
+                                    <h4 style={{ fontWeight: 'bold', marginBottom: '0.25rem' }}>{req.song.title}</h4>
+                                    <p style={{ fontSize: '0.9rem', color: '#a3a3a3', marginBottom: '1rem' }}>{req.song.artist}</p>
+                                    <p style={{ fontSize: '0.9rem', marginBottom: '1rem', color: '#d4d4d4' }}>Did you hear this song played?</p>
+                                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                        <button
+                                            onClick={() => handleVerification(req.id, true)}
+                                            style={{ flex: 1, background: '#22c55e', color: 'white', border: 'none', padding: '0.5rem', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}
+                                        >
+                                            ✓ Yes
+                                        </button>
+                                        <button
+                                            onClick={() => handleVerification(req.id, false)}
+                                            style={{ flex: 1, background: '#ef4444', color: 'white', border: 'none', padding: '0.5rem', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer' }}
+                                        >
+                                            ✗ No
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    <h3 style={{ fontSize: '1.1rem', marginBottom: '0.75rem' }}>Recently Played</h3>
+                    {playHistory.length === 0 ? (
+                        <div style={{ textAlign: 'center', padding: '2rem', color: '#a3a3a3' }}>
+                            <p>No songs played yet.</p>
+                        </div>
+                    ) : (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                            {playHistory.map(req => (
+                                <div key={req.id} className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div>
+                                        <h4 style={{ fontWeight: 'bold' }}>{req.song.title}</h4>
+                                        <p style={{ fontSize: '0.9rem', color: '#a3a3a3' }}>{req.song.artist}</p>
+                                        {req.guestConfirmed === true && (
+                                            <span style={{ fontSize: '0.8rem', color: '#22c55e' }}>✓ Verified</span>
+                                        )}
+                                    </div>
+                                    <div style={{ textAlign: 'right' }}>
+                                        <p style={{ fontSize: '0.8rem', color: '#525252' }}>
+                                            {new Date(req.playedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            ) : null}
 
             {/* Payment Modal (Used for both New Request and Boost) */}
             {(selectedSong || boostTarget) && (

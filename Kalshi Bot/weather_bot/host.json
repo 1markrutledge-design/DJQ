@@ -1,0 +1,26 @@
+{
+    "version": "2.0",
+    "extensionBundle": {
+        "id": "Microsoft.Azure.Functions.ExtensionBundle",
+        "version": "[4.*, 5.0.0)"
+    },
+    "singleton": {
+        "lockPeriod": "00:01:00",
+        "listenerLockPeriod": "00:01:00",
+        "listenerLockRecoveryPollingInterval": "00:01:00",
+        "lockAcquisitionTimeout": "00:01:00",
+        "lockAcquisitionPollingInterval": "00:00:03"
+    },
+    "functionTimeout": "00:10:00",
+    "logging": {
+        "applicationInsights": {
+            "samplingSettings": {
+                "isEnabled": false
+            }
+        },
+        "logLevel": {
+            "default": "Information",
+            "weather_bot": "Information"
+        }
+    }
+}

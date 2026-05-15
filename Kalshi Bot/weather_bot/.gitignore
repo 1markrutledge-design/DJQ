@@ -1,0 +1,9 @@
+local.settings.json
+__pycache__/
+*.pyc
+*.pyo
+.python_packages/
+.venv/
+*.egg-info/
+dist/
+*.zip

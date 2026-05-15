@@ -1,0 +1,1559 @@
+{
+  "tables": [
+    {
+      "columns": [
+        {
+          "name": "timestamp",
+          "type": "datetime"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        }
+      ],
+      "name": "PrimaryResult",
+      "rows": [
+        [
+          "2026-02-23T14:51:28.476599Z",
+          "Call to StopAsync complete, registered listeners are now stopped"
+        ],
+        [
+          "2026-02-23T14:51:28.4764746Z",
+          "Stopped the listener 'Microsoft.Azure.WebJobs.Host.Listeners.SingletonListener' for function 'tennis_bot'"
+        ],
+        [
+          "2026-02-23T14:51:28.4656719Z",
+          "Stopping the listener 'Microsoft.Azure.WebJobs.Host.Listeners.SingletonListener' for function 'tennis_bot'"
+        ],
+        [
+          "2026-02-23T14:51:28.4654197Z",
+          "Calling StopAsync on the registered listeners"
+        ],
+        [
+          "2026-02-23T14:51:28.4653268Z",
+          "DrainMode mode enabled"
+        ],
+        [
+          "2026-02-23T14:45:00.2394501Z",
+          "ConcurrencyOptions\n{\n  \"DynamicConcurrencyEnabled\": false,\n  \"MaximumFunctionConcurrency\": 500,\n  \"CPUThreshold\": 0.8,\n  \"SnapshotPersistenceEnabled\": true\n}"
+        ],
+        [
+          "2026-02-23T14:45:00.2389528Z",
+          "HttpOptions\n{\n  \"DynamicThrottlesEnabled\": false,\n  \"EnableChunkedRequestBinding\": false,\n  \"MaxConcurrentRequests\": 100,\n  \"MaxOutstandingRequests\": 200,\n  \"RoutePrefix\": \"api\"\n}"
+        ],
+        [
+          "2026-02-23T14:44:35.2014475Z",
+          "Host lock lease acquired by instance ID '000000000000000000000000E9808B18'."
+        ],
+        [
+          "2026-02-23T14:44:30.2357999Z",
+          "Host Status: {\n  \"id\": \"newfinaltennis-g0dbdxc7cudbhkcp.\",\n  \"state\": \"Running\",\n  \"version\": \"4.1044.300.1\",\n  \"versionDetails\": \"4.1044.300-dev.1.0+a9abdf3664d00a7b7c4bc9e5b20ba7af07c9f201\",\n  \"platformVersion\": \"\",\n  \"instanceId\": \"0--11f7cc86-e062-49c2-8566-e93c01552162\",\n  \"computerName\": \"\",\n  \"processUptime\": 289880,\n  \"functionAppContentEditingState\": \"NotAllowed\",\n  \"extensionBundle\": {\n    \"id\": \"Microsoft.Azure.Functions.ExtensionBundle\",\n    \"version\": \"4.28.0\"\n  }\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.235797Z",
+          "Host Status: {\n  \"id\": \"newfinaltennis-g0dbdxc7cudbhkcp.\",\n  \"state\": \"Running\",\n  \"version\": \"4.1044.300.1\",\n  \"versionDetails\": \"4.1044.300-dev.1.0+a9abdf3664d00a7b7c4bc9e5b20ba7af07c9f201\",\n  \"platformVersion\": \"\",\n  \"instanceId\": \"0--11f7cc86-e062-49c2-8566-e93c01552162\",\n  \"computerName\": \"\",\n  \"processUptime\": 289880,\n  \"functionAppContentEditingState\": \"NotAllowed\",\n  \"extensionBundle\": {\n    \"id\": \"Microsoft.Azure.Functions.ExtensionBundle\",\n    \"version\": \"4.28.0\"\n  }\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.229665Z",
+          "Job host started"
+        ],
+        [
+          "2026-02-23T14:44:30.2296198Z",
+          "Host started (48ms)"
+        ],
+        [
+          "2026-02-23T14:44:30.2243879Z",
+          "The next 5 occurrences of the 'tennis_bot' schedule (Cron: '0 0,30 * * * *') will be:\n02/23/2026 15:00:00Z\n02/23/2026 15:30:00Z\n02/23/2026 16:00:00Z\n02/23/2026 16:30:00Z\n02/23/2026 17:00:00Z"
+        ],
+        [
+          "2026-02-23T14:44:30.1893473Z",
+          "Host initialized (8ms)"
+        ],
+        [
+          "2026-02-23T14:44:30.1893067Z",
+          "HttpOptions\n{\n  \"DynamicThrottlesEnabled\": false,\n  \"EnableChunkedRequestBinding\": false,\n  \"MaxConcurrentRequests\": 100,\n  \"MaxOutstandingRequests\": 200,\n  \"RoutePrefix\": \"api\"\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.1892943Z",
+          "Initializing function HTTP routes\nNo HTTP routes mapped"
+        ],
+        [
+          "2026-02-23T14:44:30.1865284Z",
+          "Found the following functions:\nHost.Functions.tennis_bot"
+        ],
+        [
+          "2026-02-23T14:44:30.1841533Z",
+          "Worker process started and initialized."
+        ],
+        [
+          "2026-02-23T14:44:30.1839454Z",
+          "Generating 1 job function(s)"
+        ],
+        [
+          "2026-02-23T14:44:30.1812057Z",
+          "1 functions loaded"
+        ],
+        [
+          "2026-02-23T14:44:30.1811574Z",
+          "0 functions found (Custom)"
+        ],
+        [
+          "2026-02-23T14:44:30.1810416Z",
+          "Reading functions metadata (Custom)"
+        ],
+        [
+          "2026-02-23T14:44:30.1808577Z",
+          "Loading functions metadata"
+        ],
+        [
+          "2026-02-23T14:44:30.1806132Z",
+          "Starting Host (HostId=newfinaltennis-g0dbdxc7cudbhkcp., InstanceId=c996d2f5-6885-451f-aa94-6091da5e06d0, Version=4.1044.300.1, ProcessId=35, AppDomainId=1, InDebugMode=True, InDiagnosticMode=False, FunctionsExtensionVersion=~4)"
+        ],
+        [
+          "2026-02-23T14:44:30.1805185Z",
+          "Starting JobHost"
+        ],
+        [
+          "2026-02-23T14:44:30.1804977Z",
+          "ScaleOptions\n{\n  \"ScaleMetricsMaxAge\": \"00:02:00\",\n  \"ScaleMetricsSampleInterval\": \"00:00:10\",\n  \"MetricsPurgeEnabled\": true,\n  \"IsTargetScalingEnabled\": true,\n  \"IsRuntimeScalingEnabled\": false\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.1804823Z",
+          "SingletonOptions\n{\n  \"LockPeriod\": \"00:01:00\",\n  \"ListenerLockPeriod\": \"00:01:00\",\n  \"LockAcquisitionTimeout\": \"00:01:00\",\n  \"LockAcquisitionPollingInterval\": \"00:00:03\",\n  \"ListenerLockRecoveryPollingInterval\": \"00:01:00\"\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.1804678Z",
+          "ConcurrencyOptions\n{\n  \"DynamicConcurrencyEnabled\": false,\n  \"MaximumFunctionConcurrency\": 500,\n  \"CPUThreshold\": 0.8,\n  \"SnapshotPersistenceEnabled\": true\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.1804535Z",
+          "FunctionResultAggregatorOptions\n{\n  \"BatchSize\": 1000,\n  \"FlushTimeout\": \"00:00:30\",\n  \"IsEnabled\": true\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.1804364Z",
+          "HttpWorkerOptions\n{\n  \"Type\": 0,\n  \"Description\": null,\n  \"Arguments\": null,\n  \"Port\": 0,\n  \"EnableForwardingHttpRequest\": false,\n  \"EnableProxyingHttpRequest\": false,\n  \"InitializationTimeout\": \"00:00:30\",\n  \"CustomRoutesEnabled\": false,\n  \"Http\": null\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.1804186Z",
+          "LoggerFilterOptions\n{\n  \"MinLevel\": \"None\",\n  \"Rules\": [\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": \"Warning\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"Trace\",\n      \"Filter\": null\n    }\n  ]\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.180394Z",
+          "LoggerFilterOptions\n{\n  \"MinLevel\": \"None\",\n  \"Rules\": [\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": \"Warning\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"Trace\",\n      \"Filter\": null\n    }\n  ]\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.1803189Z",
+          "ApplicationInsightsLoggerOptions\n{\n  \"SamplingSettings\": null,\n  \"SamplingExcludedTypes\": null,\n  \"SamplingIncludedTypes\": null,\n  \"SnapshotConfiguration\": null,\n  \"EnablePerformanceCountersCollection\": true,\n  \"HttpAutoCollectionOptions\": {\n    \"EnableHttpTriggerExtendedInfoCollection\": true,\n    \"EnableW3CDistributedTracing\": true,\n    \"EnableResponseHeaderInjection\": true\n  },\n  \"LiveMetricsInitializationDelay\": \"00:00:15\",\n  \"EnableLiveMetrics\": true,\n  \"EnableLiveMetricsFilters\": false,\n  \"EnableQueryStringTracing\": false,\n  \"EnableDependencyTracking\": true,\n  \"DependencyTrackingOptions\": null,\n  \"TokenCredentialOptions\": null,\n  \"DiagnosticsEventListenerLogLevel\": null,\n  \"EnableAutocollectedMetricsExtractor\": false,\n  \"EnableMetricsCustomDimensionOptimization\": false,\n  \"EnableAdaptiveSamplingDelay\": true,\n  \"AdaptiveSamplingInitializationDelay\": \"00:00:15\"\n}"
+        ],
+        [
+          "2026-02-23T14:44:30.1785104Z",
+          "Host initialization: ConsecutiveErrors=0, StartupCount=3, OperationId=9523b41a-0583-4ebb-b495-3ab5f3e763f3"
+        ],
+        [
+          "2026-02-23T14:44:30.1784442Z",
+          "Initializing Host. OperationId: '9523b41a-0583-4ebb-b495-3ab5f3e763f3'."
+        ],
+        [
+          "2026-02-23T14:44:30.1746544Z",
+          "Initializing Warmup Extension."
+        ],
+        [
+          "2026-02-23T14:38:32.0144484Z",
+          "Call to StopAsync complete, registered listeners are now stopped"
+        ],
+        [
+          "2026-02-23T14:38:32.0143284Z",
+          "Stopped the listener 'Microsoft.Azure.WebJobs.Host.Listeners.SingletonListener' for function 'tennis_bot'"
+        ],
+        [
+          "2026-02-23T14:38:32.0039884Z",
+          "Stopping the listener 'Microsoft.Azure.WebJobs.Host.Listeners.SingletonListener' for function 'tennis_bot'"
+        ],
+        [
+          "2026-02-23T14:38:32.0037097Z",
+          "Calling StopAsync on the registered listeners"
+        ],
+        [
+          "2026-02-23T14:38:32.003617Z",
+          "DrainMode mode enabled"
+        ],
+        [
+          "2026-02-23T14:30:20.6332258Z",
+          "Executed 'Functions.tennis_bot' (Succeeded, Id=570b6d69-08ff-45f4-b02e-a96e82a3a1c8, Duration=20631ms)"
+        ],
+        [
+          "2026-02-23T14:30:20.6310048Z",
+          "TENNIS BOT RUN COMPLETED — 116 tickers tracked"
+        ],
+        [
+          "2026-02-23T14:30:20.6309087Z",
+          "Saved state with 116 tracked tickers"
+        ],
+        [
+          "2026-02-23T14:30:20.6296757Z",
+          "Response status: 201\nResponse headers:\n    'Content-Length': '0'\n    'Content-MD5': 'REDACTED'\n    'Last-Modified': 'Mon, 23 Feb 2026 14:30:20 GMT'\n    'ETag': '\"0x8DE72E812C7D1DA\"'\n    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'\n    'x-ms-request-id': '0a2be260-701e-00cd-6ad0-a41dab000000'\n    'x-ms-client-request-id': '2e92cb10-10c4-11f1-a375-267d4a52e741'\n    'x-ms-version': 'REDACTED'\n    'x-ms-content-crc64': 'REDACTED'\n    'x-ms-request-server-encrypted': 'REDACTED'\n    'Date': 'Mon, 23 Feb 2026 14:30:20 GMT'"
+        ],
+        [
+          "2026-02-23T14:30:20.6214914Z",
+          "Request URL: 'https://newfinaltennisgroupb225.blob.core.windows.net/tennis-bot-state/validated_targets.json'\nRequest method: 'PUT'\nRequest headers:\n    'Content-Length': '21305'\n    'x-ms-blob-type': 'REDACTED'\n    'x-ms-version': 'REDACTED'\n    'Content-Type': 'application/octet-stream'\n    'Accept': 'application/xml'\n    'User-Agent': 'azsdk-python-storage-blob/12.28.0 Python/3.12.11 (Linux-5.15.186.1-1.cm2-x86_64-with-glibc2.36)'\n    'x-ms-date': 'REDACTED'\n    'x-ms-client-request-id': '2e92cb10-10c4-11f1-a375-267d4a52e741'\n    'Authorization': 'REDACTED'\nA body is sent with the request"
+        ],
+        [
+          "2026-02-23T14:30:20.62143Z",
+          "Response status: 200\nResponse headers:\n    'Content-Length': '0'\n    'Last-Modified': 'Sun, 22 Feb 2026 20:26:36 GMT'\n    'ETag': '\"0x8DE7250AD1C6185\"'\n    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'\n    'x-ms-request-id': '0a2be25a-701e-00cd-66d0-a41dab000000'\n    'x-ms-client-request-id': '2e8c2daa-10c4-11f1-a375-267d4a52e741'\n    'x-ms-version': 'REDACTED'\n    'x-ms-lease-status': 'REDACTED'\n    'x-ms-lease-state': 'REDACTED'\n    'x-ms-has-immutability-policy': 'REDACTED'\n    'x-ms-has-legal-hold': 'REDACTED'\n    'x-ms-immutable-storage-with-versioning-enabled': 'REDACTED'\n    'x-ms-default-encryption-scope': 'REDACTED'\n    'x-ms-deny-encryption-scope-override': 'REDACTED'\n    'Date': 'Mon, 23 Feb 2026 14:30:20 GMT'"
+        ],
+        [
+          "2026-02-23T14:30:20.5782215Z",
+          "Request URL: 'https://newfinaltennisgroupb225.blob.core.windows.net/tennis-bot-state?restype=REDACTED'\nRequest method: 'GET'\nRequest headers:\n    'x-ms-version': 'REDACTED'\n    'Accept': 'application/xml'\n    'User-Agent': 'azsdk-python-storage-blob/12.28.0 Python/3.12.11 (Linux-5.15.186.1-1.cm2-x86_64-with-glibc2.36)'\n    'x-ms-date': 'REDACTED'\n    'x-ms-client-request-id': '2e8c2daa-10c4-11f1-a375-267d4a52e741'\n    'Authorization': 'REDACTED'\nNo body was attached to the request"
+        ],
+        [
+          "2026-02-23T14:30:19.9339439Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:19.9338977Z",
+          "Signing message: [1771857019896GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:19.2608974Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:19.26085Z",
+          "Signing message: [1771857019223GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:18.5934192Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:18.5933691Z",
+          "Signing message: [1771857018554GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:17.9260468Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:17.9259959Z",
+          "Signing message: [1771857017888GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:17.2410321Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:17.240981Z",
+          "Signing message: [1771857017203GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:16.5180447Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:16.5179966Z",
+          "Signing message: [1771857016480GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:15.8924478Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:15.892402Z",
+          "Signing message: [1771857015855GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:15.2302449Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:15.2301988Z",
+          "Signing message: [1771857015193GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:14.5582345Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:14.5581833Z",
+          "Signing message: [1771857014520GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:13.8713231Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:13.8712755Z",
+          "Signing message: [1771857013826GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:13.1625777Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:13.1625102Z",
+          "Signing message: [1771857013125GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:12.4659105Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:12.4658625Z",
+          "Signing message: [1771857012428GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:11.7874024Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:11.7873441Z",
+          "Signing message: [1771857011750GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:11.1199335Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:11.1198882Z",
+          "Signing message: [1771857011082GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:10.4392612Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:10.4392119Z",
+          "Signing message: [1771857010401GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:09.7682549Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:09.7681781Z",
+          "Signing message: [1771857009730GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:09.0718469Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:09.0718018Z",
+          "Signing message: [1771857009034GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:08.3870404Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:08.3869883Z",
+          "Signing message: [1771857008349GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:07.7183748Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:07.7183261Z",
+          "Signing message: [1771857007681GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:06.8628006Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:06.8627763Z",
+          "Signing message: [1771857006825GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:30:06.861858Z",
+          "BUY ORDER PLACED — ticker: KXATPCHALLENGERMATCH-26FEB23VISBAS-BAS, price: 45¢, order_id: 1d8fe3e9-9e50-40a8-aaed-2454478f687f"
+        ],
+        [
+          "2026-02-23T14:30:06.1945429Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:06.194492Z",
+          "Signing message: [1771857006154POST/trade-api/v2/portfolio/orders]"
+        ],
+        [
+          "2026-02-23T14:30:06.1944334Z",
+          "TARGET FOUND — ticker: KXATPCHALLENGERMATCH-26FEB23VISBAS-BAS, yes_ask: 100¢ (best side for match KXATPCHALLENGERMATCH-26FEB23VISBAS)"
+        ],
+        [
+          "2026-02-23T14:30:06.1943539Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22KOUDRO-DRO already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1942911Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22LAJBER-LAJ already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1942356Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22KUKLOF-KUK already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1942199Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22KUKLOF-LOF already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1941207Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22GUEGAS-GAS already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1940462Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22PERHER-HER already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1940073Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22FEABOU-FEA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1939237Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22TABRIN-TAB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1938895Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22ZAHROD-ROD already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1938093Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23CATPOU-POU already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1937287Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23KNAFOR-KNA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1936766Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23JANGAD-GAD already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1935455Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23AMBDLF-AMB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1934899Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23DEDRAT-DED already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1934188Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23RIBAGU-AGU already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1933692Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23MARAGA-MAR already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1932994Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23ZARCAD-CAD already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1932369Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23BUDBER-BUD already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.193205Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23DIAKIC-DIA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1931121Z",
+          "Ticker KXWTAMATCH-26FEB23BLIJOV-JOV already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1930621Z",
+          "Ticker KXWTAMATCH-26FEB23WILTOM-TOM already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1929972Z",
+          "Ticker KXWTAMATCH-26FEB23JONSTE-STE already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1929423Z",
+          "Ticker KXWTAMATCH-26FEB23PEGSRA-PEG already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1928909Z",
+          "Ticker KXWTAMATCH-26FEB23JUVLIU-JUV already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1928329Z",
+          "Ticker KXWTAMATCH-26FEB23WANMAS-WAN already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1927724Z",
+          "Ticker KXWTAMATCH-26FEB23BOUHAD-BOU already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.192721Z",
+          "Ticker KXWTAMATCH-26FEB23JIMPUT-PUT already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1926503Z",
+          "Ticker KXWTAMATCH-26FEB23ARAPOT-POT already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1926024Z",
+          "Ticker KXATPMATCH-26FEB22RUBROY-RUB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1925407Z",
+          "Ticker KXATPMATCH-26FEB22MEDSHA-MED already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1924462Z",
+          "Ticker KXATPMATCH-26FEB22AUGZHA-AUG already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1923945Z",
+          "Ticker KXATPMATCH-26FEB22TABBAR-TAB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1922975Z",
+          "Ticker KXATPMATCH-26FEB22MOLBUR-BUR already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1922567Z",
+          "Ticker KXATPMATCH-26FEB22SOTETC-ETC already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.192194Z",
+          "Ticker KXATPMATCH-26FEB22NAVBER-BER already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1921087Z",
+          "Ticker KXATPMATCH-26FEB22KORBEL-KOR already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1920654Z",
+          "Ticker KXATPMATCH-26FEB22PACCOB-COB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1919589Z",
+          "Ticker KXATPMATCH-26FEB22MANSPI-SPI already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1919131Z",
+          "Ticker KXATPMATCH-26FEB22ATMDIM-DIM already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.19181Z",
+          "Ticker KXATPMATCH-26FEB22ZVEMOU-ZVE already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1917535Z",
+          "Ticker KXATPMATCH-26FEB22ALTDAV-DAV already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1916746Z",
+          "Ticker KXATPMATCH-26FEB22SCHKEC-KEC already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1916094Z",
+          "Ticker KXATPMATCH-26FEB23HALDRA-DRA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1915613Z",
+          "Ticker KXATPMATCH-26FEB23STRBUB-BUB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1914413Z",
+          "Ticker KXATPMATCH-26FEB23SHEKHA-KHA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1913844Z",
+          "Ticker KXATPMATCH-26FEB23CARSHA-SHA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1912939Z",
+          "Ticker KXATPMATCH-26FEB23JARPRI-PRI already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1911935Z",
+          "Ticker KXATPMATCH-26FEB23KYPDE-DE already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1911098Z",
+          "Ticker KXATPMATCH-26FEB23NAKYME-NAK already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1910722Z",
+          "Ticker KXATPMATCH-26FEB23VACWON-VAC already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:30:06.1902223Z",
+          "Targeted tennis fetch: 176 targets in window"
+        ],
+        [
+          "2026-02-23T14:30:05.4791646Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:05.4791163Z",
+          "Signing message: [1771857005441GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:30:04.7234046Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:04.7233493Z",
+          "Signing message: [1771857004686GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:30:04.0398345Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:04.0397869Z",
+          "Signing message: [1771857004000GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:30:03.3545377Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:03.3544908Z",
+          "Signing message: [1771857003314GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:30:02.5562266Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:02.5561774Z",
+          "Signing message: [1771857002518GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:30:01.7560595Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:01.7560077Z",
+          "Signing message: [1771857001712GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:30:00.8986472Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:00.8985958Z",
+          "Signing message: [1771857000860GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:30:00.1157457Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:30:00.1156994Z",
+          "Signing message: [1771857000073GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:30:00.0728337Z",
+          "Loaded state with 115 tracked tickers"
+        ],
+        [
+          "2026-02-23T14:30:00.0721929Z",
+          "Response status: 206\nResponse headers:\n    'Content-Length': '21127'\n    'Content-Type': 'application/octet-stream'\n    'Content-Range': 'REDACTED'\n    'Last-Modified': 'Mon, 23 Feb 2026 14:00:24 GMT'\n    'Accept-Ranges': 'REDACTED'\n    'ETag': '\"0x8DE72E3E459F474\"'\n    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'\n    'x-ms-request-id': '89831085-501e-00a8-2bd0-a4b3ef000000'\n    'x-ms-client-request-id': '22522fb2-10c4-11f1-a375-267d4a52e741'\n    'x-ms-version': 'REDACTED'\n    'x-ms-creation-time': 'REDACTED'\n    'x-ms-blob-content-md5': 'REDACTED'\n    'x-ms-lease-status': 'REDACTED'\n    'x-ms-lease-state': 'REDACTED'\n    'x-ms-blob-type': 'REDACTED'\n    'x-ms-server-encrypted': 'REDACTED'\n    'Date': 'Mon, 23 Feb 2026 14:29:59 GMT'"
+        ],
+        [
+          "2026-02-23T14:30:00.0659052Z",
+          "Request URL: 'https://newfinaltennisgroupb225.blob.core.windows.net/tennis-bot-state/validated_targets.json'\nRequest method: 'GET'\nRequest headers:\n    'x-ms-range': 'REDACTED'\n    'x-ms-version': 'REDACTED'\n    'Accept': 'application/xml'\n    'User-Agent': 'azsdk-python-storage-blob/12.28.0 Python/3.12.11 (Linux-5.15.186.1-1.cm2-x86_64-with-glibc2.36)'\n    'x-ms-date': 'REDACTED'\n    'x-ms-client-request-id': '22522fb2-10c4-11f1-a375-267d4a52e741'\n    'Authorization': 'REDACTED'\nNo body was attached to the request"
+        ],
+        [
+          "2026-02-23T14:30:00.0657135Z",
+          "Response status: 200\nResponse headers:\n    'Content-Length': '0'\n    'Last-Modified': 'Sun, 22 Feb 2026 20:26:36 GMT'\n    'ETag': '\"0x8DE7250AD1C6185\"'\n    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'\n    'x-ms-request-id': '89831082-501e-00a8-2ad0-a4b3ef000000'\n    'x-ms-client-request-id': '224a34c4-10c4-11f1-a375-267d4a52e741'\n    'x-ms-version': 'REDACTED'\n    'x-ms-lease-status': 'REDACTED'\n    'x-ms-lease-state': 'REDACTED'\n    'x-ms-has-immutability-policy': 'REDACTED'\n    'x-ms-has-legal-hold': 'REDACTED'\n    'x-ms-immutable-storage-with-versioning-enabled': 'REDACTED'\n    'x-ms-default-encryption-scope': 'REDACTED'\n    'x-ms-deny-encryption-scope-override': 'REDACTED'\n    'Date': 'Mon, 23 Feb 2026 14:29:59 GMT'"
+        ],
+        [
+          "2026-02-23T14:30:00.0128432Z",
+          "Request URL: 'https://newfinaltennisgroupb225.blob.core.windows.net/tennis-bot-state?restype=REDACTED'\nRequest method: 'GET'\nRequest headers:\n    'x-ms-version': 'REDACTED'\n    'Accept': 'application/xml'\n    'User-Agent': 'azsdk-python-storage-blob/12.28.0 Python/3.12.11 (Linux-5.15.186.1-1.cm2-x86_64-with-glibc2.36)'\n    'x-ms-date': 'REDACTED'\n    'x-ms-client-request-id': '224a34c4-10c4-11f1-a375-267d4a52e741'\n    'Authorization': 'REDACTED'\nNo body was attached to the request"
+        ],
+        [
+          "2026-02-23T14:30:00.0117889Z",
+          "============================================================"
+        ],
+        [
+          "2026-02-23T14:30:00.0117521Z",
+          "TENNIS BOT RUN STARTED at 2026-02-23T14:30:00.006962+00:00"
+        ],
+        [
+          "2026-02-23T14:30:00.0093172Z",
+          "============================================================"
+        ],
+        [
+          "2026-02-23T14:30:00.0022782Z",
+          "Trigger Details: ScheduleStatus: {\"Last\":\"2026-02-23T14:00:00+00:00\",\"Next\":\"2026-02-23T14:30:00+00:00\",\"LastUpdated\":\"2026-02-23T14:00:00+00:00\"}"
+        ],
+        [
+          "2026-02-23T14:30:00.0021006Z",
+          "Executing 'Functions.tennis_bot' (Reason='Timer fired at 2026-02-23T14:30:00.0012555+00:00', Id=570b6d69-08ff-45f4-b02e-a96e82a3a1c8)"
+        ],
+        [
+          "2026-02-23T14:29:11.5496919Z",
+          "ConcurrencyOptions\n{\n  \"DynamicConcurrencyEnabled\": false,\n  \"MaximumFunctionConcurrency\": 500,\n  \"CPUThreshold\": 0.8,\n  \"SnapshotPersistenceEnabled\": true\n}"
+        ],
+        [
+          "2026-02-23T14:29:11.5493192Z",
+          "HttpOptions\n{\n  \"DynamicThrottlesEnabled\": false,\n  \"EnableChunkedRequestBinding\": false,\n  \"MaxConcurrentRequests\": 100,\n  \"MaxOutstandingRequests\": 200,\n  \"RoutePrefix\": \"api\"\n}"
+        ],
+        [
+          "2026-02-23T14:28:46.5075978Z",
+          "Host lock lease acquired by instance ID '0000000000000000000000005ACB6E88'."
+        ],
+        [
+          "2026-02-23T14:28:41.5405277Z",
+          "Job host started"
+        ],
+        [
+          "2026-02-23T14:28:41.5404895Z",
+          "Host started (57ms)"
+        ],
+        [
+          "2026-02-23T14:28:41.5352097Z",
+          "The next 5 occurrences of the 'tennis_bot' schedule (Cron: '0 0,30 * * * *') will be:\n02/23/2026 14:30:00Z\n02/23/2026 15:00:00Z\n02/23/2026 15:30:00Z\n02/23/2026 16:00:00Z\n02/23/2026 16:30:00Z"
+        ],
+        [
+          "2026-02-23T14:28:41.4919085Z",
+          "Host initialized (8ms)"
+        ],
+        [
+          "2026-02-23T14:28:41.4918542Z",
+          "Initializing function HTTP routes\nNo HTTP routes mapped"
+        ],
+        [
+          "2026-02-23T14:28:41.4918375Z",
+          "HttpOptions\n{\n  \"DynamicThrottlesEnabled\": false,\n  \"EnableChunkedRequestBinding\": false,\n  \"MaxConcurrentRequests\": 100,\n  \"MaxOutstandingRequests\": 200,\n  \"RoutePrefix\": \"api\"\n}"
+        ],
+        [
+          "2026-02-23T14:28:41.4888112Z",
+          "Found the following functions:\nHost.Functions.tennis_bot"
+        ],
+        [
+          "2026-02-23T14:28:41.4868468Z",
+          "Worker process started and initialized."
+        ],
+        [
+          "2026-02-23T14:28:41.4862037Z",
+          "Generating 1 job function(s)"
+        ],
+        [
+          "2026-02-23T14:28:41.4833429Z",
+          "1 functions loaded"
+        ],
+        [
+          "2026-02-23T14:28:41.4832864Z",
+          "0 functions found (Custom)"
+        ],
+        [
+          "2026-02-23T14:28:41.4831418Z",
+          "Reading functions metadata (Custom)"
+        ],
+        [
+          "2026-02-23T14:28:41.4829424Z",
+          "Loading functions metadata"
+        ],
+        [
+          "2026-02-23T14:28:41.4828943Z",
+          "Starting Host (HostId=newfinaltennis-g0dbdxc7cudbhkcp., InstanceId=021da25a-2dcb-4583-b652-a80c59dc6522, Version=4.1044.300.1, ProcessId=35, AppDomainId=1, InDebugMode=False, InDiagnosticMode=False, FunctionsExtensionVersion=~4)"
+        ],
+        [
+          "2026-02-23T14:28:41.4828023Z",
+          "Starting JobHost"
+        ],
+        [
+          "2026-02-23T14:28:41.4827854Z",
+          "ScaleOptions\n{\n  \"ScaleMetricsMaxAge\": \"00:02:00\",\n  \"ScaleMetricsSampleInterval\": \"00:00:10\",\n  \"MetricsPurgeEnabled\": true,\n  \"IsTargetScalingEnabled\": true,\n  \"IsRuntimeScalingEnabled\": false\n}"
+        ],
+        [
+          "2026-02-23T14:28:41.4827792Z",
+          "SingletonOptions\n{\n  \"LockPeriod\": \"00:01:00\",\n  \"ListenerLockPeriod\": \"00:01:00\",\n  \"LockAcquisitionTimeout\": \"00:01:00\",\n  \"LockAcquisitionPollingInterval\": \"00:00:03\",\n  \"ListenerLockRecoveryPollingInterval\": \"00:01:00\"\n}"
+        ],
+        [
+          "2026-02-23T14:28:41.4827737Z",
+          "ConcurrencyOptions\n{\n  \"DynamicConcurrencyEnabled\": false,\n  \"MaximumFunctionConcurrency\": 500,\n  \"CPUThreshold\": 0.8,\n  \"SnapshotPersistenceEnabled\": true\n}"
+        ],
+        [
+          "2026-02-23T14:28:41.4827678Z",
+          "FunctionResultAggregatorOptions\n{\n  \"BatchSize\": 1000,\n  \"FlushTimeout\": \"00:00:30\",\n  \"IsEnabled\": true\n}"
+        ],
+        [
+          "2026-02-23T14:28:41.4827617Z",
+          "HttpWorkerOptions\n{\n  \"Type\": 0,\n  \"Description\": null,\n  \"Arguments\": null,\n  \"Port\": 0,\n  \"EnableForwardingHttpRequest\": false,\n  \"EnableProxyingHttpRequest\": false,\n  \"InitializationTimeout\": \"00:00:30\",\n  \"CustomRoutesEnabled\": false,\n  \"Http\": null\n}"
+        ],
+        [
+          "2026-02-23T14:28:41.4827539Z",
+          "LoggerFilterOptions\n{\n  \"MinLevel\": \"None\",\n  \"Rules\": [\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": \"Warning\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"Trace\",\n      \"Filter\": null\n    }\n  ]\n}"
+        ],
+        [
+          "2026-02-23T14:28:41.4827436Z",
+          "LoggerFilterOptions\n{\n  \"MinLevel\": \"None\",\n  \"Rules\": [\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": \"Warning\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"Trace\",\n      \"Filter\": null\n    }\n  ]\n}"
+        ],
+        [
+          "2026-02-23T14:28:41.4826809Z",
+          "ApplicationInsightsLoggerOptions\n{\n  \"SamplingSettings\": null,\n  \"SamplingExcludedTypes\": null,\n  \"SamplingIncludedTypes\": null,\n  \"SnapshotConfiguration\": null,\n  \"EnablePerformanceCountersCollection\": true,\n  \"HttpAutoCollectionOptions\": {\n    \"EnableHttpTriggerExtendedInfoCollection\": true,\n    \"EnableW3CDistributedTracing\": true,\n    \"EnableResponseHeaderInjection\": true\n  },\n  \"LiveMetricsInitializationDelay\": \"00:00:15\",\n  \"EnableLiveMetrics\": true,\n  \"EnableLiveMetricsFilters\": false,\n  \"EnableQueryStringTracing\": false,\n  \"EnableDependencyTracking\": true,\n  \"DependencyTrackingOptions\": null,\n  \"TokenCredentialOptions\": null,\n  \"DiagnosticsEventListenerLogLevel\": null,\n  \"EnableAutocollectedMetricsExtractor\": false,\n  \"EnableMetricsCustomDimensionOptimization\": false,\n  \"EnableAdaptiveSamplingDelay\": true,\n  \"AdaptiveSamplingInitializationDelay\": \"00:00:15\"\n}"
+        ],
+        [
+          "2026-02-23T14:28:41.4806967Z",
+          "Host initialization: ConsecutiveErrors=0, StartupCount=3, OperationId=fef9c67b-e83c-43e8-800f-fc12b88fa794"
+        ],
+        [
+          "2026-02-23T14:28:41.4806354Z",
+          "Initializing Host. OperationId: 'fef9c67b-e83c-43e8-800f-fc12b88fa794'."
+        ],
+        [
+          "2026-02-23T14:28:41.4764778Z",
+          "Initializing Warmup Extension."
+        ],
+        [
+          "2026-02-23T14:08:54.6421466Z",
+          "Call to StopAsync complete, registered listeners are now stopped"
+        ],
+        [
+          "2026-02-23T14:08:54.6420571Z",
+          "Stopped the listener 'Microsoft.Azure.WebJobs.Host.Listeners.SingletonListener' for function 'tennis_bot'"
+        ],
+        [
+          "2026-02-23T14:08:54.6310927Z",
+          "Stopping the listener 'Microsoft.Azure.WebJobs.Host.Listeners.SingletonListener' for function 'tennis_bot'"
+        ],
+        [
+          "2026-02-23T14:08:54.6308753Z",
+          "Calling StopAsync on the registered listeners"
+        ],
+        [
+          "2026-02-23T14:08:54.6308027Z",
+          "DrainMode mode enabled"
+        ],
+        [
+          "2026-02-23T14:00:24.7520742Z",
+          "Executed 'Functions.tennis_bot' (Succeeded, Id=02c5240a-c068-4cae-91ea-dc065ad1fac0, Duration=24753ms)"
+        ],
+        [
+          "2026-02-23T14:00:24.7493058Z",
+          "TENNIS BOT RUN COMPLETED — 115 tickers tracked"
+        ],
+        [
+          "2026-02-23T14:00:24.749245Z",
+          "Saved state with 115 tracked tickers"
+        ],
+        [
+          "2026-02-23T14:00:24.7480311Z",
+          "Response status: 201\nResponse headers:\n    'Content-Length': '0'\n    'Content-MD5': 'REDACTED'\n    'Last-Modified': 'Mon, 23 Feb 2026 14:00:24 GMT'\n    'ETag': '\"0x8DE72E3E459F474\"'\n    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'\n    'x-ms-request-id': 'bc95aade-201e-0079-70cc-a4d165000000'\n    'x-ms-client-request-id': '0024bfd0-10c0-11f1-9058-b61e2fa29f38'\n    'x-ms-version': 'REDACTED'\n    'x-ms-content-crc64': 'REDACTED'\n    'x-ms-request-server-encrypted': 'REDACTED'\n    'Date': 'Mon, 23 Feb 2026 14:00:24 GMT'"
+        ],
+        [
+          "2026-02-23T14:00:24.7387288Z",
+          "Request URL: 'https://newfinaltennisgroupb225.blob.core.windows.net/tennis-bot-state/validated_targets.json'\nRequest method: 'PUT'\nRequest headers:\n    'Content-Length': '21127'\n    'x-ms-blob-type': 'REDACTED'\n    'x-ms-version': 'REDACTED'\n    'Content-Type': 'application/octet-stream'\n    'Accept': 'application/xml'\n    'User-Agent': 'azsdk-python-storage-blob/12.28.0 Python/3.12.11 (Linux-5.15.186.1-1.cm2-x86_64-with-glibc2.36)'\n    'x-ms-date': 'REDACTED'\n    'x-ms-client-request-id': '0024bfd0-10c0-11f1-9058-b61e2fa29f38'\n    'Authorization': 'REDACTED'\nA body is sent with the request"
+        ],
+        [
+          "2026-02-23T14:00:24.7386526Z",
+          "Response status: 200\nResponse headers:\n    'Content-Length': '0'\n    'Last-Modified': 'Sun, 22 Feb 2026 20:26:36 GMT'\n    'ETag': '\"0x8DE7250AD1C6185\"'\n    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'\n    'x-ms-request-id': 'bc95aad2-201e-0079-69cc-a4d165000000'\n    'x-ms-client-request-id': '001cf372-10c0-11f1-9058-b61e2fa29f38'\n    'x-ms-version': 'REDACTED'\n    'x-ms-lease-status': 'REDACTED'\n    'x-ms-lease-state': 'REDACTED'\n    'x-ms-has-immutability-policy': 'REDACTED'\n    'x-ms-has-legal-hold': 'REDACTED'\n    'x-ms-immutable-storage-with-versioning-enabled': 'REDACTED'\n    'x-ms-default-encryption-scope': 'REDACTED'\n    'x-ms-deny-encryption-scope-override': 'REDACTED'\n    'Date': 'Mon, 23 Feb 2026 14:00:24 GMT'"
+        ],
+        [
+          "2026-02-23T14:00:24.6868914Z",
+          "Request URL: 'https://newfinaltennisgroupb225.blob.core.windows.net/tennis-bot-state?restype=REDACTED'\nRequest method: 'GET'\nRequest headers:\n    'x-ms-version': 'REDACTED'\n    'Accept': 'application/xml'\n    'User-Agent': 'azsdk-python-storage-blob/12.28.0 Python/3.12.11 (Linux-5.15.186.1-1.cm2-x86_64-with-glibc2.36)'\n    'x-ms-date': 'REDACTED'\n    'x-ms-client-request-id': '001cf372-10c0-11f1-9058-b61e2fa29f38'\n    'Authorization': 'REDACTED'\nNo body was attached to the request"
+        ],
+        [
+          "2026-02-23T14:00:24.0889286Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:24.0887983Z",
+          "Signing message: [1771855224051GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:23.4629692Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:23.4628685Z",
+          "Signing message: [1771855223424GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:22.7884374Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:22.7883739Z",
+          "Signing message: [1771855222750GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:22.159269Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:22.1591718Z",
+          "Signing message: [1771855222120GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:21.5330985Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:21.5330347Z",
+          "Signing message: [1771855221495GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:20.9040937Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:20.9040243Z",
+          "Signing message: [1771855220866GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:20.2676495Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:20.2675843Z",
+          "Signing message: [1771855220230GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:19.6376857Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:19.6376183Z",
+          "Signing message: [1771855219600GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:18.9474921Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:18.9474221Z",
+          "Signing message: [1771855218909GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:18.3205051Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:18.3204408Z",
+          "Signing message: [1771855218282GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:17.6442416Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:17.6441735Z",
+          "Signing message: [1771855217605GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:16.9710649Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:16.9709996Z",
+          "Signing message: [1771855216933GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:16.3037341Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:16.3036656Z",
+          "Signing message: [1771855216266GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:15.6759336Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:15.6758458Z",
+          "Signing message: [1771855215638GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:14.9628796Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:14.962813Z",
+          "Signing message: [1771855214925GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:14.3277708Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:14.3277038Z",
+          "Signing message: [1771855214290GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:13.7014973Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:13.7014312Z",
+          "Signing message: [1771855213664GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:13.0417722Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:13.0416947Z",
+          "Signing message: [1771855213000GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:12.3919517Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:12.3918509Z",
+          "Signing message: [1771855212355GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:12.3910635Z",
+          "SELL FILLED / SETTLED — ticker: KXWTAMATCH-26FEB23ANDGAL-AND, removing from state"
+        ],
+        [
+          "2026-02-23T14:00:11.7010335Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:11.7010238Z",
+          "Signing message: [1771855211663GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:11.700947Z",
+          "SELL ORDER PLACED — ticker: KXATPCHALLENGERMATCH-26FEB23VARMID-MID, price: 99¢, order_id: cee45dd4-48f4-4788-a5ff-7fb86a893e5d"
+        ],
+        [
+          "2026-02-23T14:00:11.0765561Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:11.0764649Z",
+          "Signing message: [1771855211039POST/trade-api/v2/portfolio/orders]"
+        ],
+        [
+          "2026-02-23T14:00:10.3711721Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:10.3710387Z",
+          "Signing message: [1771855210333GET/trade-api/v2/portfolio/orders]"
+        ],
+        [
+          "2026-02-23T14:00:10.3710136Z",
+          "FILL DETECTED — ticker: KXATPCHALLENGERMATCH-26FEB23VARMID-MID, buy order_id: 3bbd36b6-a937-4af5-9949-2a10db0c1a1f"
+        ],
+        [
+          "2026-02-23T14:00:10.3699246Z",
+          "SELL ORDER PLACED — ticker: KXWTAMATCH-26FEB23ANDGAL-AND, price: 99¢, order_id: 3a9f4db0-5b70-44d9-b4c3-97ecb9c0032e"
+        ],
+        [
+          "2026-02-23T14:00:09.7480422Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:09.7479276Z",
+          "Signing message: [1771855209705POST/trade-api/v2/portfolio/orders]"
+        ],
+        [
+          "2026-02-23T14:00:09.0561325Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:09.056093Z",
+          "Signing message: [1771855209018GET/trade-api/v2/portfolio/orders]"
+        ],
+        [
+          "2026-02-23T14:00:09.0548681Z",
+          "FILL DETECTED — ticker: KXWTAMATCH-26FEB23ANDGAL-AND, buy order_id: 9d313fdf-1dcd-408a-a870-7652ecef4931"
+        ],
+        [
+          "2026-02-23T14:00:08.3395069Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:08.339481Z",
+          "Signing message: [1771855208302GET/trade-api/v2/portfolio/fills]"
+        ],
+        [
+          "2026-02-23T14:00:08.3385782Z",
+          "BUY ORDER PLACED — ticker: KXATPCHALLENGERMATCH-26FEB23KNAFOR-KNA, price: 45¢, order_id: 25a540ff-26dd-4fa7-b5a7-ff936d7f4eee"
+        ],
+        [
+          "2026-02-23T14:00:07.6581554Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:07.6581473Z",
+          "Signing message: [1771855207620POST/trade-api/v2/portfolio/orders]"
+        ],
+        [
+          "2026-02-23T14:00:07.658077Z",
+          "TARGET FOUND — ticker: KXATPCHALLENGERMATCH-26FEB23KNAFOR-KNA, yes_ask: 77¢ (best side for match KXATPCHALLENGERMATCH-26FEB23KNAFOR)"
+        ],
+        [
+          "2026-02-23T14:00:07.6203194Z",
+          "Failed to place buy order for KXATPCHALLENGERMATCH-26FEB23VISBAS-BAS: 409 Client Error: Conflict for url: https://api.elections.kalshi.com/trade-api/v2/portfolio/orders"
+        ],
+        [
+          "2026-02-23T14:00:06.9589952Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:06.9588725Z",
+          "Signing message: [1771855206921POST/trade-api/v2/portfolio/orders]"
+        ],
+        [
+          "2026-02-23T14:00:06.9587972Z",
+          "TARGET FOUND — ticker: KXATPCHALLENGERMATCH-26FEB23VISBAS-BAS, yes_ask: 75¢ (best side for match KXATPCHALLENGERMATCH-26FEB23VISBAS)"
+        ],
+        [
+          "2026-02-23T14:00:06.9580894Z",
+          "BUY ORDER PLACED — ticker: KXATPCHALLENGERMATCH-26FEB23DEDRAT-DED, price: 45¢, order_id: 76e8a9b3-8cbc-414a-8acd-a12910c63386"
+        ],
+        [
+          "2026-02-23T14:00:06.238633Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:06.2386271Z",
+          "Signing message: [1771855206197POST/trade-api/v2/portfolio/orders]"
+        ],
+        [
+          "2026-02-23T14:00:06.2386209Z",
+          "TARGET FOUND — ticker: KXATPCHALLENGERMATCH-26FEB23DEDRAT-DED, yes_ask: 85¢ (best side for match KXATPCHALLENGERMATCH-26FEB23DEDRAT)"
+        ],
+        [
+          "2026-02-23T14:00:06.238611Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22BLAGOJ-BLA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2386051Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22BLAGOJ-GOJ already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385951Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22KOUDRO-DRO already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385891Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22LAJBER-LAJ already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385833Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22KUKLOF-LOF already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385731Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22GUEGAS-GAS already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385673Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22PERHER-HER already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385613Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22FEABOU-FEA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385497Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22TABRIN-TAB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385438Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB22ZAHROD-ROD already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385375Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23CATPOU-POU already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385248Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23JANGAD-GAD already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385189Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23RIBMAR-RIB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385107Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23AMBDLF-AMB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2385048Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23RIBAGU-AGU already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384984Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23MARAGA-MAR already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384873Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23ZARCAD-CAD already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384812Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23BUDBER-BUD already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384751Z",
+          "Ticker KXATPCHALLENGERMATCH-26FEB23DIAKIC-DIA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384652Z",
+          "Ticker KXWTAMATCH-26FEB23BLIJOV-JOV already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384593Z",
+          "Ticker KXWTAMATCH-26FEB23WILTOM-TOM already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384533Z",
+          "Ticker KXWTAMATCH-26FEB23JONSTE-STE already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384434Z",
+          "Ticker KXWTAMATCH-26FEB23PEGSRA-PEG already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384375Z",
+          "Ticker KXWTAMATCH-26FEB23JUVLIU-JUV already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384274Z",
+          "Ticker KXWTAMATCH-26FEB23WANMAS-WAN already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384216Z",
+          "Ticker KXWTAMATCH-26FEB23BOUHAD-BOU already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384156Z",
+          "Ticker KXWTAMATCH-26FEB23JIMPUT-PUT already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2384055Z",
+          "Ticker KXWTAMATCH-26FEB23ARAPOT-POT already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383996Z",
+          "Ticker KXATPMATCH-26FEB22RUBROY-RUB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383937Z",
+          "Ticker KXATPMATCH-26FEB22WAWHAS-WAW already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383824Z",
+          "Ticker KXATPMATCH-26FEB22MEDSHA-MED already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383764Z",
+          "Ticker KXATPMATCH-26FEB22AUGZHA-AUG already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383701Z",
+          "Ticker KXATPMATCH-26FEB22NAVKOP-NAV already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383543Z",
+          "Ticker KXATPMATCH-26FEB22TABBAR-TAB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383482Z",
+          "Ticker KXATPMATCH-26FEB22MOLBUR-BUR already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383373Z",
+          "Ticker KXATPMATCH-26FEB22SOTETC-ETC already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383314Z",
+          "Ticker KXATPMATCH-26FEB22NAVBER-BER already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383254Z",
+          "Ticker KXATPMATCH-26FEB22KORBEL-KOR already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383091Z",
+          "Ticker KXATPMATCH-26FEB22PACCOB-COB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2383031Z",
+          "Ticker KXATPMATCH-26FEB22MANSPI-SPI already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2382969Z",
+          "Ticker KXATPMATCH-26FEB22ATMDIM-DIM already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2382864Z",
+          "Ticker KXATPMATCH-26FEB22ZVEMOU-ZVE already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2382803Z",
+          "Ticker KXATPMATCH-26FEB22ALTDAV-DAV already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2382739Z",
+          "Ticker KXATPMATCH-26FEB22SCHKEC-KEC already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2382627Z",
+          "Ticker KXATPMATCH-26FEB23HALDRA-DRA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2382567Z",
+          "Ticker KXATPMATCH-26FEB23STRBUB-BUB already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2382462Z",
+          "Ticker KXATPMATCH-26FEB23SHEKHA-KHA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2382399Z",
+          "Ticker KXATPMATCH-26FEB23CARSHA-SHA already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2382312Z",
+          "Ticker KXATPMATCH-26FEB23JARPRI-PRI already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2381922Z",
+          "Ticker KXATPMATCH-26FEB23KYPDE-DE already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2345744Z",
+          "Ticker KXATPMATCH-26FEB23NAKYME-NAK already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2345415Z",
+          "Ticker KXATPMATCH-26FEB23VACWON-VAC already tracked — skipping"
+        ],
+        [
+          "2026-02-23T14:00:06.2337815Z",
+          "Targeted tennis fetch: 182 targets in window"
+        ],
+        [
+          "2026-02-23T14:00:05.5409684Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:05.5409039Z",
+          "Signing message: [1771855205503GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:00:04.8462257Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:04.846155Z",
+          "Signing message: [1771855204807GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:00:04.0803936Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:04.0803213Z",
+          "Signing message: [1771855204043GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:00:03.3836768Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:03.3835216Z",
+          "Signing message: [1771855203338GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:00:02.6034495Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:02.6033836Z",
+          "Signing message: [1771855202565GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:00:01.7642866Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:01.7634621Z",
+          "Signing message: [1771855201718GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:00:00.9832223Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:00.9831529Z",
+          "Signing message: [1771855200944GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:00:00.1967172Z",
+          "Using Key ID: 6af32...4ca5f"
+        ],
+        [
+          "2026-02-23T14:00:00.1966443Z",
+          "Signing message: [1771855200094GET/trade-api/v2/markets]"
+        ],
+        [
+          "2026-02-23T14:00:00.1897143Z",
+          "Loaded state with 114 tracked tickers"
+        ],
+        [
+          "2026-02-23T14:00:00.092946Z",
+          "Response status: 206\nResponse headers:\n    'Content-Length': '20877'\n    'Content-Type': 'application/octet-stream'\n    'Content-Range': 'REDACTED'\n    'Last-Modified': 'Mon, 23 Feb 2026 13:30:20 GMT'\n    'Accept-Ranges': 'REDACTED'\n    'ETag': '\"0x8DE72DFB12DCD1E\"'\n    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'\n    'x-ms-request-id': '2bad884d-c01e-00d8-1bcc-a40a18000000'\n    'x-ms-client-request-id': 'f1730b0e-10bf-11f1-9058-b61e2fa29f38'\n    'x-ms-version': 'REDACTED'\n    'x-ms-creation-time': 'REDACTED'\n    'x-ms-blob-content-md5': 'REDACTED'\n    'x-ms-lease-status': 'REDACTED'\n    'x-ms-lease-state': 'REDACTED'\n    'x-ms-blob-type': 'REDACTED'\n    'x-ms-server-encrypted': 'REDACTED'\n    'Date': 'Mon, 23 Feb 2026 13:59:59 GMT'"
+        ],
+        [
+          "2026-02-23T14:00:00.0860433Z",
+          "Request URL: 'https://newfinaltennisgroupb225.blob.core.windows.net/tennis-bot-state/validated_targets.json'\nRequest method: 'GET'\nRequest headers:\n    'x-ms-range': 'REDACTED'\n    'x-ms-version': 'REDACTED'\n    'Accept': 'application/xml'\n    'User-Agent': 'azsdk-python-storage-blob/12.28.0 Python/3.12.11 (Linux-5.15.186.1-1.cm2-x86_64-with-glibc2.36)'\n    'x-ms-date': 'REDACTED'\n    'x-ms-client-request-id': 'f1730b0e-10bf-11f1-9058-b61e2fa29f38'\n    'Authorization': 'REDACTED'\nNo body was attached to the request"
+        ],
+        [
+          "2026-02-23T14:00:00.0859564Z",
+          "Response status: 200\nResponse headers:\n    'Content-Length': '0'\n    'Last-Modified': 'Sun, 22 Feb 2026 20:26:36 GMT'\n    'ETag': '\"0x8DE7250AD1C6185\"'\n    'Server': 'Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0'\n    'x-ms-request-id': '2bad883a-c01e-00d8-0bcc-a40a18000000'\n    'x-ms-client-request-id': 'f1686e9c-10bf-11f1-9058-b61e2fa29f38'\n    'x-ms-version': 'REDACTED'\n    'x-ms-lease-status': 'REDACTED'\n    'x-ms-lease-state': 'REDACTED'\n    'x-ms-has-immutability-policy': 'REDACTED'\n    'x-ms-has-legal-hold': 'REDACTED'\n    'x-ms-immutable-storage-with-versioning-enabled': 'REDACTED'\n    'x-ms-default-encryption-scope': 'REDACTED'\n    'x-ms-deny-encryption-scope-override': 'REDACTED'\n    'Date': 'Mon, 23 Feb 2026 13:59:59 GMT'"
+        ],
+        [
+          "2026-02-23T14:00:00.0175788Z",
+          "Request URL: 'https://newfinaltennisgroupb225.blob.core.windows.net/tennis-bot-state?restype=REDACTED'\nRequest method: 'GET'\nRequest headers:\n    'x-ms-version': 'REDACTED'\n    'Accept': 'application/xml'\n    'User-Agent': 'azsdk-python-storage-blob/12.28.0 Python/3.12.11 (Linux-5.15.186.1-1.cm2-x86_64-with-glibc2.36)'\n    'x-ms-date': 'REDACTED'\n    'x-ms-client-request-id': 'f1686e9c-10bf-11f1-9058-b61e2fa29f38'\n    'Authorization': 'REDACTED'\nNo body was attached to the request"
+        ],
+        [
+          "2026-02-23T14:00:00.0106416Z",
+          "============================================================"
+        ],
+        [
+          "2026-02-23T14:00:00.010596Z",
+          "TENNIS BOT RUN STARTED at 2026-02-23T14:00:00.006096+00:00"
+        ],
+        [
+          "2026-02-23T14:00:00.0101393Z",
+          "============================================================"
+        ],
+        [
+          "2026-02-23T13:59:59.9997513Z",
+          "Trigger Details: ScheduleStatus: {\"Last\":\"2026-02-23T13:30:00.0015951+00:00\",\"Next\":\"2026-02-23T14:00:00+00:00\",\"LastUpdated\":\"2026-02-23T13:30:00.0015951+00:00\"}"
+        ],
+        [
+          "2026-02-23T13:59:59.9994641Z",
+          "Executing 'Functions.tennis_bot' (Reason='Timer fired at 2026-02-23T13:59:59.9984401+00:00', Id=02c5240a-c068-4cae-91ea-dc065ad1fac0)"
+        ],
+        [
+          "2026-02-23T13:59:09.6475963Z",
+          "ConcurrencyOptions\n{\n  \"DynamicConcurrencyEnabled\": false,\n  \"MaximumFunctionConcurrency\": 500,\n  \"CPUThreshold\": 0.8,\n  \"SnapshotPersistenceEnabled\": true\n}"
+        ],
+        [
+          "2026-02-23T13:59:09.6474595Z",
+          "HttpOptions\n{\n  \"DynamicThrottlesEnabled\": false,\n  \"EnableChunkedRequestBinding\": false,\n  \"MaxConcurrentRequests\": 100,\n  \"MaxOutstandingRequests\": 200,\n  \"RoutePrefix\": \"api\"\n}"
+        ],
+        [
+          "2026-02-23T13:58:44.6074363Z",
+          "Host lock lease acquired by instance ID '000000000000000000000000072D7797'."
+        ],
+        [
+          "2026-02-23T13:58:39.6363347Z",
+          "Job host started"
+        ],
+        [
+          "2026-02-23T13:58:39.636268Z",
+          "Host started (57ms)"
+        ],
+        [
+          "2026-02-23T13:58:39.6287438Z",
+          "The next 5 occurrences of the 'tennis_bot' schedule (Cron: '0 0,30 * * * *') will be:\n02/23/2026 14:00:00Z\n02/23/2026 14:30:00Z\n02/23/2026 15:00:00Z\n02/23/2026 15:30:00Z\n02/23/2026 16:00:00Z"
+        ],
+        [
+          "2026-02-23T13:58:39.5880639Z",
+          "Host initialized (9ms)"
+        ],
+        [
+          "2026-02-23T13:58:39.5879791Z",
+          "Initializing function HTTP routes\nNo HTTP routes mapped"
+        ],
+        [
+          "2026-02-23T13:58:39.5879544Z",
+          "HttpOptions\n{\n  \"DynamicThrottlesEnabled\": false,\n  \"EnableChunkedRequestBinding\": false,\n  \"MaxConcurrentRequests\": 100,\n  \"MaxOutstandingRequests\": 200,\n  \"RoutePrefix\": \"api\"\n}"
+        ],
+        [
+          "2026-02-23T13:58:39.5848777Z",
+          "Found the following functions:\nHost.Functions.tennis_bot"
+        ],
+        [
+          "2026-02-23T13:58:39.5822599Z",
+          "Worker process started and initialized."
+        ],
+        [
+          "2026-02-23T13:58:39.582214Z",
+          "Generating 1 job function(s)"
+        ],
+        [
+          "2026-02-23T13:58:39.5790564Z",
+          "1 functions loaded"
+        ],
+        [
+          "2026-02-23T13:58:39.578997Z",
+          "0 functions found (Custom)"
+        ],
+        [
+          "2026-02-23T13:58:39.5786222Z",
+          "Reading functions metadata (Custom)"
+        ],
+        [
+          "2026-02-23T13:58:39.5784707Z",
+          "Loading functions metadata"
+        ],
+        [
+          "2026-02-23T13:58:39.5784291Z",
+          "Starting Host (HostId=newfinaltennis-g0dbdxc7cudbhkcp., InstanceId=56be6170-a1e1-4e11-92d5-25e05471afcc, Version=4.1044.300.1, ProcessId=34, AppDomainId=1, InDebugMode=False, InDiagnosticMode=False, FunctionsExtensionVersion=~4)"
+        ],
+        [
+          "2026-02-23T13:58:39.5783432Z",
+          "Starting JobHost"
+        ],
+        [
+          "2026-02-23T13:58:39.5783269Z",
+          "ScaleOptions\n{\n  \"ScaleMetricsMaxAge\": \"00:02:00\",\n  \"ScaleMetricsSampleInterval\": \"00:00:10\",\n  \"MetricsPurgeEnabled\": true,\n  \"IsTargetScalingEnabled\": true,\n  \"IsRuntimeScalingEnabled\": false\n}"
+        ],
+        [
+          "2026-02-23T13:58:39.5783127Z",
+          "SingletonOptions\n{\n  \"LockPeriod\": \"00:01:00\",\n  \"ListenerLockPeriod\": \"00:01:00\",\n  \"LockAcquisitionTimeout\": \"00:01:00\",\n  \"LockAcquisitionPollingInterval\": \"00:00:03\",\n  \"ListenerLockRecoveryPollingInterval\": \"00:01:00\"\n}"
+        ],
+        [
+          "2026-02-23T13:58:39.5783021Z",
+          "ConcurrencyOptions\n{\n  \"DynamicConcurrencyEnabled\": false,\n  \"MaximumFunctionConcurrency\": 500,\n  \"CPUThreshold\": 0.8,\n  \"SnapshotPersistenceEnabled\": true\n}"
+        ],
+        [
+          "2026-02-23T13:58:39.5782842Z",
+          "FunctionResultAggregatorOptions\n{\n  \"BatchSize\": 1000,\n  \"FlushTimeout\": \"00:00:30\",\n  \"IsEnabled\": true\n}"
+        ],
+        [
+          "2026-02-23T13:58:39.5782619Z",
+          "HttpWorkerOptions\n{\n  \"Type\": 0,\n  \"Description\": null,\n  \"Arguments\": null,\n  \"Port\": 0,\n  \"EnableForwardingHttpRequest\": false,\n  \"EnableProxyingHttpRequest\": false,\n  \"InitializationTimeout\": \"00:00:30\",\n  \"CustomRoutesEnabled\": false,\n  \"Http\": null\n}"
+        ],
+        [
+          "2026-02-23T13:58:39.5782464Z",
+          "LoggerFilterOptions\n{\n  \"MinLevel\": \"None\",\n  \"Rules\": [\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": \"Warning\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"Trace\",\n      \"Filter\": null\n    }\n  ]\n}"
+        ],
+        [
+          "2026-02-23T13:58:39.5782191Z",
+          "LoggerFilterOptions\n{\n  \"MinLevel\": \"None\",\n  \"Rules\": [\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": \"Warning\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.WebHostSystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": null,\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"None\",\n      \"Filter\": null\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Script.WebHost.Diagnostics.SystemLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": null,\n      \"Filter\": \"<AddFilter>b__0\"\n    },\n    {\n      \"ProviderName\": \"Microsoft.Azure.WebJobs.Logging.ApplicationInsights.ApplicationInsightsLoggerProvider\",\n      \"CategoryName\": null,\n      \"LogLevel\": \"Trace\",\n      \"Filter\": null\n    }\n  ]\n}"
+        ],
+        [
+          "2026-02-23T13:58:39.5781478Z",
+          "ApplicationInsightsLoggerOptions\n{\n  \"SamplingSettings\": null,\n  \"SamplingExcludedTypes\": null,\n  \"SamplingIncludedTypes\": null,\n  \"SnapshotConfiguration\": null,\n  \"EnablePerformanceCountersCollection\": true,\n  \"HttpAutoCollectionOptions\": {\n    \"EnableHttpTriggerExtendedInfoCollection\": true,\n    \"EnableW3CDistributedTracing\": true,\n    \"EnableResponseHeaderInjection\": true\n  },\n  \"LiveMetricsInitializationDelay\": \"00:00:15\",\n  \"EnableLiveMetrics\": true,\n  \"EnableLiveMetricsFilters\": false,\n  \"EnableQueryStringTracing\": false,\n  \"EnableDependencyTracking\": true,\n  \"DependencyTrackingOptions\": null,\n  \"TokenCredentialOptions\": null,\n  \"DiagnosticsEventListenerLogLevel\": null,\n  \"EnableAutocollectedMetricsExtractor\": false,\n  \"EnableMetricsCustomDimensionOptimization\": false,\n  \"EnableAdaptiveSamplingDelay\": true,\n  \"AdaptiveSamplingInitializationDelay\": \"00:00:15\"\n}"
+        ],
+        [
+          "2026-02-23T13:58:39.5762036Z",
+          "Host initialization: ConsecutiveErrors=0, StartupCount=3, OperationId=1523817f-8bd8-46d1-bed7-5bf2749ca183"
+        ],
+        [
+          "2026-02-23T13:58:39.5761385Z",
+          "Initializing Host. OperationId: '1523817f-8bd8-46d1-bed7-5bf2749ca183'."
+        ],
+        [
+          "2026-02-23T13:58:39.5721262Z",
+          "Initializing Warmup Extension."
+        ]
+      ]
+    }
+  ]
+}
